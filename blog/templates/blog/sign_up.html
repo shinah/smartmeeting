@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles%}
+{% block content %}
+<div class="sign-div">
+	<div>
+		<div class="sidedivUp sidediv">
+			<h1>SIGN UP</h1>
+			<!-- <div class="divideArea"></div> -->
+			<p>Welcome to Easier!</p>
+		</div>	
+		<div>
+			<form method="post" action="">
+		    	{% csrf_token %}
+		    	{{ form.as_p }}
+		    	<button type="submit" class="sign_up_btn">회원가입</button>
+		    	<a href="/sign_in">이미 SMART MEETING의 회원이신가요?</a>
+			</form>
+		</div>
+	</div>		
+</div>
+<script type="text/javascript">
+  var height = $( window ).height()
+  $('.sign-div').css('height', height+"px");
+  $('body').attr("class","");
+  $('body').attr("class","user");
+  // $('input[name=password]').attr("type","password");
+</script>
+{% endblock %}

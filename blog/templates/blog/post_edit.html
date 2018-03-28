@@ -1,0 +1,28 @@
+{% extends 'blog/sub.html' %}
+{% block content %}
+
+<div class="post_edit" align="center">
+	{% if not user.is_authenticated %}
+	<h1>피드백을 작성하시려면 로그인이 필요합니다.</h1>
+	<h2><a href="/sign_in">로그인 하러가기 Click!</a></h2>
+	{% else %}
+	    <h1>"토의 주제를 제시해 주세요"</h1>
+	    <h3>주제 별로 채팅방이 구성됩니다.</h3>
+	    <form method="POST" class="post-form" >
+	    	{% csrf_token %}
+	        {{ form.as_p }}
+	        <button type="submit" class="save btn btn-default">Save</button>
+	    </form>
+    {% endif %}
+
+</div>
+<script>
+	$(".post-form > p > input").attr("class","fInput");
+	$(".post-form > p > textarea").attr("class","fTextarea");
+	$(".post-form > button").attr("class","fButton")
+	$(".fInput").attr("placeholder","토의 주제을 적어주세요.");
+	$(".fTextarea").attr("placeholder","내용을 적어주세요.");
+
+	// $( ".wrapInput" ).prepend( "<div class=\"input-label\">TITLE</div>" );
+</script>
+{% endblock %}
