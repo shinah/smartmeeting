@@ -13,10 +13,15 @@ from .forms import PostForm, UserForm, LoginForm
 
 from django.utils import timezone
 
+from .group import *
+
 
 def index(request):
 	isuser = 0
 	return render(request, 'blog/index.html', {'isuser':isuser})
+def group_make(request):
+	ran_str = random_url()
+	return render(request, 'blog/group_make.html',{'ran_str':ran_str})
 
 def post_new(request):
 	if request.method == "POST":
@@ -45,7 +50,7 @@ def signup(request):
     	if form.is_valid():
     		new_user = User.objects.create_user(**form.cleaned_data)
     		login(request, new_user)
-    		return redirect('/index')
+    		return redirect('/')
     	else:
     		isuser = 1
     		return render(request, 'blog/sign_up.html', {'form': form, 'isuser':isuser})
