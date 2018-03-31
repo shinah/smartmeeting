@@ -1,7 +1,12 @@
 {% extends 'blog/sub.html' %}
 
 {% block content %}
-    <div class="post">
+<h3> 주제: {{ post.title }}<h3>
+	<p> {{ post.text|linebreaksbr }} <p> <!--주제 상세설명-->
+	<div><a href="">채팅방 이동</a></div>
+	<div><a href="">업무 분담표</a></div>
+	<div><a href="">공유 문서</a></div>
+    <!--<div class="post">
         {% if post.published_date %}
             <div class="date">
                 {{ post.published_date }}
@@ -9,5 +14,5 @@
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
-    </div>
+    </div>-->
 {% endblock %}

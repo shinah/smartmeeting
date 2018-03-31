@@ -67,7 +67,7 @@ def signin(request):
         user = authenticate(username = username, password = password)
         if user is not None:
             login(request, user)
-            return redirect('/content')
+            return redirect('/')
         else:
         	isuser = 1
         	return HttpResponse('로그인 실패. 다시 시도 해보세요.')
