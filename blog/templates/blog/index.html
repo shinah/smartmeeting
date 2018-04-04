@@ -13,7 +13,7 @@
 			<div class="inline-block margin-right"><a href="/sign_up">SIGN UP</a></div>
 			<div class="inline-block "><a href="/sign_in">SIGN IN</a></div>
 		{% else %}
-			<p>Welcome, {{ user.username }} !</p>
+			<p>Welcome, <span style="color:yellow">{{ user.username }} !</span></p>
 			<div class="inline-block margin-right"><a href='/group_make'>MAKE GROUP</a></div>
 			<div class="inline-block  margin-right"><a href="/sign_out">SIGN OUT</a></div>
 			<div class="inline-block margin-right"><a href="{% url 'dic:post_new' %}">BOARD</a></div>
