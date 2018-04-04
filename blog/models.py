@@ -16,3 +16,10 @@ class Post(models.Model):
 
   def __str__(self):
     return self.title
+
+class Group(models.Model):
+  group_name = models.CharField(max_length=100)
+  group_link = models.CharField(max_length=100, null=True)
+  url = models.CharField(max_length=50, null=True)
+  created_date = models.DateTimeField(default=timezone.now)
+  published_date = models.DateTimeField(blank=True, null=True)

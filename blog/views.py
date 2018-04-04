@@ -6,22 +6,47 @@ from django.http import HttpResponse, JsonResponse
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post
+from .models import Post, Group
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm
+from .forms import PostForm, UserForm, LoginForm, GroupForm
 
 from django.utils import timezone
 
 from .group import *
 
 
+
 def index(request):
 	isuser = 0
 	return render(request, 'blog/index.html', {'isuser':isuser})
+
 def group_make(request):
-	ran_str = random_url()
-	return render(request, 'blog/group_make.html',{'ran_str':ran_str})
+    ran = Random_make()
+    a = ran.random_url()
+    if request.method == "POST":
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            group = form.save(commit=False)
+            group.url = a
+            group.published_date = timezone.now()
+            group.save()
+            return redirect('/group_list')
+    else:
+        form = GroupForm()
+    return render(request, 'blog/group_make.html',{'a':a, 'form':form})
+
+def group_make2(request,url):
+    group = get_object_or_404(Group,url=url)
+    return render(request,'blog/group.html', {'group':group})
+
+def group_list(request):
+    groups = Group.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    return render(request,'blog/group_list.html', {'groups':groups})
+
+def group(request,url):
+    group = get_object_or_404(Group, url = url)
+    return render(request,'blog/group.html', {'group':group})
 
 def post_new(request):
 	if request.method == "POST":

@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import Post
+from .models import Post,Group
 from django.contrib.auth.models import User
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ('group_name','group_link',)
 
 class PostForm(forms.ModelForm):
 	class Meta:
