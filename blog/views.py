@@ -28,7 +28,7 @@ def group_make(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             group = form.save(commit=False)
-            group.url = a
+            group.url = group.group_link[28:40]#변경부분
             group.published_date = timezone.now()
             group.save()
             return redirect('/group_list')
