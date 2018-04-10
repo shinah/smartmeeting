@@ -1,0 +1,16 @@
+{% extends 'blog/sub.html' %}
+{% block content %}
+
+<div class="post_edit" align="center">
+	{% if not user.is_authenticated %}
+	<h1>그룹을 만드려면 로그인이 필요합니다.</h1>
+	<h2><a href="/sign_in">로그인 하러가기 Click!</a></h2>
+	{% else %}
+    	<p>초대 링크</p>
+    	"http://127.0.0.1:8000/group/{{group.url}}/"
+    	<br>
+        <a href="/group_list/"><button type="submit" class="save btn btn-default">Save</button></a>
+    {% endif %}
+
+</div>
+{% endblock %}

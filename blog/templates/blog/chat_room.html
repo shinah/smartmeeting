@@ -1,0 +1,24 @@
+{% extends 'blog/sub.html' %}
+{% load staticfiles%}
+{% block content %}
+
+<div class="post_edit" align="center">
+	<h3> 주제: {{ post.title }}</h3>
+
+	{% for comment in post.comments.all %}
+		<p>{{comment.author}}:{{comment.text}}</p>
+	{% empty %}
+		<p>채팅이 개설되었습니다.</p>
+	{% endfor %}
+
+	<form method="POST">
+		{% csrf_token %}
+		<textarea name='text' rows='4' cols='50' placeholder="채팅을 입력해주세요"></textarea>
+	    <button type="submit" class="save btn btn-default">Save</button>
+	</form>
+	{% endblock %}
+
+</div>
+
+<script>
+</script>
