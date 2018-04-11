@@ -31,7 +31,7 @@ def group_make(request):
             group.url = group.group_link[28:40]#변경부분
             group.published_date = timezone.now()
             group.save()
-            return redirect('/group_list')
+            return redirect('dic:group',url=group.url)
     else:
         form = GroupForm()
     return render(request, 'blog/group_make.html',{'a':a, 'form':form})
