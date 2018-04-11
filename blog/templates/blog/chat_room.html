@@ -4,12 +4,13 @@
 
 <div class="post_edit" align="center">
 	<h3> 주제: {{ post.title }}</h3>
-
-	{% for comment in post.comments.all %}
-		<p>{{comment.author}}:{{comment.text}}</p>
-	{% empty %}
-		<p>채팅이 개설되었습니다.</p>
-	{% endfor %}
+	<div class="chat">
+		{% for comment in post.comments.all %}
+			<p>{{comment.author}}:{{comment.text}}</p>
+		{% empty %}
+			<p>채팅이 개설되었습니다.</p>
+		{% endfor %}
+	</div>
 
 	<form method="POST">
 		{% csrf_token %}
