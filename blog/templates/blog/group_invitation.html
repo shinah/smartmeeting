@@ -1,0 +1,19 @@
+{% extends 'blog/sub.html' %}
+{% block content %}
+
+<div class="post_edit" align="center">
+	{% if not user.is_authenticated %}
+	<h1>그룹에 참여하려면 로그인이 필요합니다.</h1>
+	<h2><a href="/sign_in">로그인 하러가기 Click!</a></h2>
+	{% else %}
+	    <form method="POST" class="post-form" >
+	    	{% csrf_token %}
+	    	
+	    	<p>그룹명</p>
+	    	<input type="text" size='30' name="group_name" readonly>
+	    	<br>
+	        <button type="submit" class="save btn btn-default">참여하기</button>
+	    </form>
+    {% endif %}
+
+</div>

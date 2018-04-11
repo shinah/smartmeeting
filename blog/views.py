@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post, Group
+from .models import Post, Group, User_belong
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm
@@ -21,9 +21,10 @@ def index(request):
 	isuser = 0
 	return render(request, 'blog/index.html', {'isuser':isuser})
 
-def group_make(request):
+def group_make(request,user):
     ran = Random_make()
     a = ran.random_url()
+    user_belong = get_object_or_404(User_belong)
     if request.method == "POST":
         form = GroupForm(request.POST)
         if form.is_valid():
@@ -31,6 +32,16 @@ def group_make(request):
             group.url = group.group_link[28:40]#변경부분
             group.published_date = timezone.now()
             group.save()
+            #user_belong = User_belong.objects.create(user = request.user)
+            
+            if user_belong.g1 is None:
+              user_belong.g1 = group.url
+            elif user_belong.g2 is None:
+              user_belong.g2 = group.url
+            elif user_belong.g3 is None:
+              user_belong.g3 = group.url
+            else:
+              return redirect('/group_make2')
             return redirect('/group_list')
     else:
         form = GroupForm()
@@ -43,6 +54,27 @@ def group_list(request):
 def group(request,url):
     group = get_object_or_404(Group, url = url)
     return render(request,'blog/group.html', {'group':group})
+
+def group_invitation(request, url):
+    group = get_object_or_404(Group, url = url)
+    if request.method == "POST":
+        form = GroupForm(request.POST, instance=group)
+        if form.is_valid():
+            group = form.save(commit=False)
+            user_belong = get_object_or_404(User_belong, user = request.user)
+            if user_belong.g1 is None:
+              user_belong.g1 == group.url
+            elif user_belong.g2 is None:
+              user_belong.g2 == group.url
+            elif user_belong.g3 is None:
+              user_belong.g3 == group.url
+            else:
+              return redirect('/group_make2') # 오류메시지 출력: 최대 그룹 3개
+            group.save()
+            return redirect('blog/group.html', url = group.url)    
+    else:
+        form = GroupForm(instance=group)
+    return render(request, 'blog/group_invitation', {'form':form})
 
 def post_new(request,url):
     group = get_object_or_404(Group, url = url)
@@ -86,9 +118,10 @@ def signup(request):
     	form = UserForm(request.POST)
     	print(form)
     	if form.is_valid():
-    		new_user = User.objects.create_user(**form.cleaned_data)
-    		login(request, new_user)
-    		return redirect('/')
+            new_user = User.objects.create_user(**form.cleaned_data)
+            login(request, new_user)
+            User_belong.objects.create(user = request.user)
+            return redirect('/')
     	else:
     		isuser = 1
     		return render(request, 'blog/sign_up.html', {'form': form, 'isuser':isuser})
