@@ -36,7 +36,6 @@ def group_make(request):
             group2 = get_object_or_404(Group, url = group.url)
             group.user.add(user)
             return redirect('dic:group', url=group.url)
->>>>>>> test
     else:
         form = GroupForm()
     return render(request, 'blog/group_make.html',{'a':a, 'form':form})
