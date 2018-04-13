@@ -1,7 +1,8 @@
 {% extends 'blog/sub.html' %}
 {% load staticfiles%}
 {% block content %}
-<h1>토의주제목록</h1>
+<div align="center"><h2>그룹명ㅣ{{group.group_name}}</h2></div>
+<h2>토의주제목록</h2>
 <a href="{% url 'dic:post_new' url=group.url %}">토의주제 작성하기</a>
 <br><br><br>
 <div class="result-container">
