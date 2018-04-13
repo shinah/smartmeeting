@@ -6,10 +6,10 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post, Group
-from django.contrib.auth.models import User
+from .models import Post, Group, User_belong
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm
+from .forms import PostForm, UserForm, UserForm2, LoginForm, GroupForm, CommentForm
 
 from django.utils import timezone
 
@@ -28,21 +28,36 @@ def group_make(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             group = form.save(commit=False)
+            user_belong = form2.save(commit=False)
             group.url = group.group_link[28:40]#변경부분
             group.published_date = timezone.now()
             group.save()
-            return redirect('dic:group',url=group.url)
+            user = get_object_or_404(User,username=request.user)
+            group2 = get_object_or_404(Group, url = group.url)
+            group.user.add(user)
+            return redirect('dic:group', url=group.url)
+>>>>>>> test
     else:
         form = GroupForm()
     return render(request, 'blog/group_make.html',{'a':a, 'form':form})
 
 def group_list(request):
-    groups = Group.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    groups = Group.objects.filter(user=request.user)
     return render(request,'blog/group_list.html', {'groups':groups})
 
 def group(request,url):
     group = get_object_or_404(Group, url = url)
-    return render(request,'blog/group.html', {'group':group})
+    #if group.user.all().find != request.user:
+            #return redirect('group_invitation/', url= group.url)
+    return render(request,'blog/group.html',{'group':group})
+
+def group_invitation(request, url):
+    # user_belong을 새로 만들어야 함.
+    user = get_object_or_404(User,username=request.user)
+    group = get_object_or_404(Group, url = url)
+    group.user.add(user)
+
+    return render(request, 'blog/group_invitation.html',{'group':group})
 
 def post_new(request,url):
     group = get_object_or_404(Group, url = url)
@@ -86,9 +101,9 @@ def signup(request):
     	form = UserForm(request.POST)
     	print(form)
     	if form.is_valid():
-    		new_user = User.objects.create_user(**form.cleaned_data)
-    		login(request, new_user)
-    		return redirect('/')
+            new_user = User.objects.create_user(**form.cleaned_data)
+            login(request, new_user)
+            return redirect('/')
     	else:
     		isuser = 1
     		return render(request, 'blog/sign_up.html', {'form': form, 'isuser':isuser})

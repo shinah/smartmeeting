@@ -2,10 +2,10 @@
 {% load staticfiles%}
 {% block content %}
 <div class="result-container">
-    {% for group in groups %}
+    {% for g in groups %}
     <div class=container>
-        <h1><a href="{% url 'dic:group' url=group.url %}">{{ group.group_name }}</a></h1>
+        <h1> <a href="{% url 'dic:group' url=g.url %}">{{ g.group_name }}</a></h1>
     </div>
     {% endfor %}
 </div>
-{% endblock %}
+{% endblock %}s

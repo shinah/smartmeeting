@@ -1,0 +1,20 @@
+{% extends 'blog/sub.html' %}
+{% block content %}
+
+<div class="post_edit" align="center">
+	{% if not user.is_authenticated %}
+	<h1>그룹에 참여하려면 로그인이 필요합니다.</h1>
+	<h2><a href="/sign_in">로그인 하러가기 Click!</a></h2>
+	{% else %}
+		<h1>그룹명</h1>
+	    <p>{{group.group_name}}</p>
+	    <br>
+    	<h1>ME: </h1>
+    	<p>{{user.username}}</p>
+    	<br>
+        <a href="{% url 'dic:group' url=group.url %}">참여하기</a>
+    {% endif %}
+
+</div>
+
+{% endblock%}
