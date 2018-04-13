@@ -39,19 +39,10 @@ class Comment(models.Model):
   def __str__(self):
     return self.text
 
-  #User모델 확장: user별 그룹 정보 포함.
+ 
 class User_belong(models.Model):
   user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
-  g1 = models.CharField(max_length=100, null=True)
-  g2 = models.CharField(max_length=100, null=True)
-  g3 = models.CharField(max_length=100, null=True)
+  g1 = models.ForeignKey('Group', related_name='g1s', default=None)
+  #g2 = models.CharField(max_length=100, null=True, default=None)
+  #g3 = models.CharField(max_length=100, null=True, default=None)
 
-  def add(self, group_name):
-    if self.g1 is None:
-      self.g1 == group_name
-    elif self.g2 is None:
-      self.g2 == group_name
-    elif self.g3 is None:
-      self.g3 == group_name
-    else:
-      return False

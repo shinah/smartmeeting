@@ -6,14 +6,19 @@
 	<h1>그룹에 참여하려면 로그인이 필요합니다.</h1>
 	<h2><a href="/sign_in">로그인 하러가기 Click!</a></h2>
 	{% else %}
-	    <form method="POST" class="post-form" >
+		<h1>그룹명</h1>
+	    <p>{{group.url}}</p>
+	    <br>
+	    <form method="POST" class="post-form">
 	    	{% csrf_token %}
 	    	
-	    	<p>그룹명</p>
-	    	<input type="text" size='30' name="group_name" readonly>
+	    	<h1>ME: </h1>
+	    	<p>{{user.username}}</p>
 	    	<br>
 	        <button type="submit" class="save btn btn-default">참여하기</button>
 	    </form>
     {% endif %}
 
 </div>
+
+{% endblock%}

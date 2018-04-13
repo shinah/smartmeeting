@@ -13,4 +13,12 @@
 	    </div>
 	    {% endfor %}
 	</div>
+
+	<div>
+	    {% for g1 in group.g1s.all %}
+	    <div class=container>
+	        <p>{{ user_belong.g1|linebreaksbr }}</p>
+	    </div>
+	    {% endfor %}
+	</div>
 {% endblock %}

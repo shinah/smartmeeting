@@ -7,9 +7,9 @@ from django.template import RequestContext
 
 #모델 및 폼
 from .models import Post, Group, User_belong
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm
+from .forms import PostForm, UserForm, UserForm2, LoginForm, GroupForm, CommentForm
 
 from django.utils import timezone
 
@@ -21,30 +21,27 @@ def index(request):
 	isuser = 0
 	return render(request, 'blog/index.html', {'isuser':isuser})
 
-def group_make(request,user):
+def group_make(request):
     ran = Random_make()
     a = ran.random_url()
-    user_belong = get_object_or_404(User_belong)
+    
     if request.method == "POST":
+
         form = GroupForm(request.POST)
+        form2 = UserForm2()
         if form.is_valid():
             group = form.save(commit=False)
+            user_belong = form2.save(commit=False)
             group.url = group.group_link[28:40]#변경부분
             group.published_date = timezone.now()
             group.save()
-            #user_belong = User_belong.objects.create(user = request.user)
-            
-            if user_belong.g1 is None:
-              user_belong.g1 = group.url
-            elif user_belong.g2 is None:
-              user_belong.g2 = group.url
-            elif user_belong.g3 is None:
-              user_belong.g3 = group.url
-            else:
-              return redirect('/group_make2')
-            return redirect('/group_list')
+            user_belong.user = request.user
+            user_belong.g1 = group #Group객체로 저장됨.
+            user_belong.save()
+            return redirect('dic:group', url=group.url)
     else:
         form = GroupForm()
+        form2 = UserForm2()
     return render(request, 'blog/group_make.html',{'a':a, 'form':form})
 
 def group_list(request):
@@ -53,28 +50,32 @@ def group_list(request):
 
 def group(request,url):
     group = get_object_or_404(Group, url = url)
-    return render(request,'blog/group.html', {'group':group})
+    if request.user.is_anonymous:
+            return redirect('group_invitation/', url= group.url)
+    # 그룹 만든 사람 이외에는 User_belong객체 생성되지 않은 상태
+    if User_belong.objects.filter(user = request.user):
+        #자기의 그룹 존재, 해당 링크 아닌 경우 404
+        user_belong = get_object_or_404(User_belong, user=request.user, g1 = group)
+        return render(request,'blog/group.html', {'group':group})
+    else:
+            return redirect('group_invitation/', url= group.url)
 
 def group_invitation(request, url):
+    # user_belong을 새로 만들어야 함.
     group = get_object_or_404(Group, url = url)
     if request.method == "POST":
-        form = GroupForm(request.POST, instance=group)
+        form = UserForm2(request.POST)
         if form.is_valid():
-            group = form.save(commit=False)
-            user_belong = get_object_or_404(User_belong, user = request.user)
-            if user_belong.g1 is None:
-              user_belong.g1 == group.url
-            elif user_belong.g2 is None:
-              user_belong.g2 == group.url
-            elif user_belong.g3 is None:
-              user_belong.g3 == group.url
-            else:
-              return redirect('/group_make2') # 오류메시지 출력: 최대 그룹 3개
-            group.save()
-            return redirect('blog/group.html', url = group.url)    
+            form.save(commit=False)
+            thisUrl = get_object_or_404(Group, url = url)
+            user_belong = User_belong.objects.create(
+                            user = request.user,
+                            g1 = thisUrl)
+            user_belong.save()
+            return render(request,'blog/group.html', {'group':group})
     else:
-        form = GroupForm(instance=group)
-    return render(request, 'blog/group_invitation', {'form':form})
+        form = UserForm2()
+    return render(request, 'blog/group_invitation.html', {'form': form})
 
 def post_new(request,url):
     group = get_object_or_404(Group, url = url)
@@ -120,7 +121,6 @@ def signup(request):
     	if form.is_valid():
             new_user = User.objects.create_user(**form.cleaned_data)
             login(request, new_user)
-            User_belong.objects.create(user = request.user)
             return redirect('/')
     	else:
     		isuser = 1

@@ -9,6 +9,7 @@ urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^group_make/$',views.group_make,name='group_make'),
 	url(r'^group/(?P<url>\w+)/$',views.group,name='group'),#url변수에 모든 값을 넣어 ㅂ뷰로 전송
+    url(r'^group/(?P<url>\w+)/group_invitation/$',views.group_invitation,name='group_invitation'),
 	url(r'^group_list$',views.group_list,name='group_list'),
     url(r'^post/(?P<url>\w+)/new/$',views.post_new, name='post_new'),
     url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),

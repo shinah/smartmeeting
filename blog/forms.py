@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import Post,Group,Comment
+#from django.forms import formset_factory
+from .models import Post,Group,Comment,User_belong
 from django.contrib.auth.models import User
 
 class GroupForm(forms.ModelForm):
@@ -12,6 +13,7 @@ class PostForm(forms.ModelForm):
 	class Meta:
 		model = Post
 		fields = ('title', 'text',)
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
@@ -27,6 +29,11 @@ class UserForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'placeholder':'Email'}),
             'password' : forms.PasswordInput(attrs={'placeholder':'Password'}),
         }
+
+class UserForm2(forms.ModelForm):
+    class Meta:
+        model = User_belong
+        fields = []
 
 class LoginForm(forms.ModelForm):
   class Meta:
