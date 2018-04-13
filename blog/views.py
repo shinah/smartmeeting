@@ -24,58 +24,39 @@ def index(request):
 def group_make(request):
     ran = Random_make()
     a = ran.random_url()
-    
     if request.method == "POST":
-
         form = GroupForm(request.POST)
-        form2 = UserForm2()
         if form.is_valid():
             group = form.save(commit=False)
             user_belong = form2.save(commit=False)
             group.url = group.group_link[28:40]#변경부분
             group.published_date = timezone.now()
             group.save()
-            user_belong.user = request.user
-            user_belong.g1 = group #Group객체로 저장됨.
-            user_belong.save()
+            user = get_object_or_404(User,username=request.user)
+            group2 = get_object_or_404(Group, url = group.url)
+            group.user.add(user)
             return redirect('dic:group', url=group.url)
     else:
         form = GroupForm()
-        form2 = UserForm2()
     return render(request, 'blog/group_make.html',{'a':a, 'form':form})
 
 def group_list(request):
-    groups = Group.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    groups = Group.objects.filter(user=request.user)
     return render(request,'blog/group_list.html', {'groups':groups})
 
 def group(request,url):
     group = get_object_or_404(Group, url = url)
-    if request.user.is_anonymous:
-            return redirect('group_invitation/', url= group.url)
-    # 그룹 만든 사람 이외에는 User_belong객체 생성되지 않은 상태
-    if User_belong.objects.filter(user = request.user):
-        #자기의 그룹 존재, 해당 링크 아닌 경우 404
-        user_belong = get_object_or_404(User_belong, user=request.user, g1 = group)
-        return render(request,'blog/group.html', {'group':group})
-    else:
-            return redirect('group_invitation/', url= group.url)
+    #if group.user.all().find != request.user:
+            #return redirect('group_invitation/', url= group.url)
+    return render(request,'blog/group.html',{'group':group})
 
 def group_invitation(request, url):
     # user_belong을 새로 만들어야 함.
+    user = get_object_or_404(User,username=request.user)
     group = get_object_or_404(Group, url = url)
-    if request.method == "POST":
-        form = UserForm2(request.POST)
-        if form.is_valid():
-            form.save(commit=False)
-            thisUrl = get_object_or_404(Group, url = url)
-            user_belong = User_belong.objects.create(
-                            user = request.user,
-                            g1 = thisUrl)
-            user_belong.save()
-            return render(request,'blog/group.html', {'group':group})
-    else:
-        form = UserForm2()
-    return render(request, 'blog/group_invitation.html', {'form': form})
+    group.user.add(user)
+
+    return render(request, 'blog/group_invitation.html',{'group':group})
 
 def post_new(request,url):
     group = get_object_or_404(Group, url = url)

@@ -7,16 +7,12 @@
 	<h2><a href="/sign_in">로그인 하러가기 Click!</a></h2>
 	{% else %}
 		<h1>그룹명</h1>
-	    <p>{{group.url}}</p>
+	    <p>{{group.group_name}}</p>
 	    <br>
-	    <form method="POST" class="post-form">
-	    	{% csrf_token %}
-	    	
-	    	<h1>ME: </h1>
-	    	<p>{{user.username}}</p>
-	    	<br>
-	        <button type="submit" class="save btn btn-default">참여하기</button>
-	    </form>
+    	<h1>ME: </h1>
+    	<p>{{user.username}}</p>
+    	<br>
+        <a href="{% url 'dic:group' url=group.url %}">참여하기</a>
     {% endif %}
 
 </div>

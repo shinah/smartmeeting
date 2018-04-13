@@ -10,6 +10,7 @@ class Group(models.Model):
   url = models.CharField(max_length=50, primary_key=True)
   created_date = models.DateTimeField(default=timezone.now)
   published_date = models.DateTimeField(blank=True, null=True)
+  user = models.ManyToManyField('auth.User',related_name='user', default=None)
 
   def __str__(self):
     return self.group_name
