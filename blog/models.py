@@ -41,9 +41,4 @@ class Comment(models.Model):
     return self.text
 
  
-class User_belong(models.Model):
-  user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
-  g1 = models.ForeignKey('Group', related_name='g1s', default=None)
-  #g2 = models.CharField(max_length=100, null=True, default=None)
-  #g3 = models.CharField(max_length=100, null=True, default=None)
 

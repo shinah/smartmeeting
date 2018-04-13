@@ -35,7 +35,6 @@ class Migration(migrations.Migration):
                 ('url', models.CharField(max_length=50, primary_key=True, serialize=False)),
                 ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('published_date', models.DateTimeField(blank=True, null=True)),
-                ('user', models.ManyToManyField(default=None, related_name='user', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -48,14 +47,6 @@ class Migration(migrations.Migration):
                 ('published_date', models.DateTimeField(blank=True, null=True)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
                 ('group', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='posts', to='blog.Group')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='User_belong',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('g1', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, related_name='g1s', to='blog.Group')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(

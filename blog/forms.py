@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 #from django.forms import formset_factory
-from .models import Post,Group,Comment,User_belong
+from .models import Post,Group,Comment
 from django.contrib.auth.models import User
 
 class GroupForm(forms.ModelForm):
@@ -30,10 +30,6 @@ class UserForm(forms.ModelForm):
             'password' : forms.PasswordInput(attrs={'placeholder':'Password'}),
         }
 
-class UserForm2(forms.ModelForm):
-    class Meta:
-        model = User_belong
-        fields = []
 
 class LoginForm(forms.ModelForm):
   class Meta:
