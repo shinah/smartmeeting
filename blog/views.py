@@ -32,7 +32,7 @@ def group_make(request):
             group.published_date = timezone.now()
             group.save()
             user = get_object_or_404(User,username=request.user)
-            group2 = get_object_or_404(Group, url = group.url)
+            #group2 = get_object_or_404(Group, url = group.url)
             group.user.add(user)
             return redirect('dic:group', url=group.url)
     else:
@@ -50,10 +50,12 @@ def group(request,url):
     return render(request,'blog/group.html',{'group':group})
 
 def group_invitation(request, url):
-    # user_belong을 새로 만들어야 함.
-    user = get_object_or_404(User,username=request.user)
     group = get_object_or_404(Group, url = url)
-    group.user.add(user)
+    try:
+        user = User.objects.get(username=request.user)
+        group.user.add(user)
+    except User.DoesNotExist:
+        redirect('/sign_in')
 
     return render(request, 'blog/group_invitation.html',{'group':group})
 
