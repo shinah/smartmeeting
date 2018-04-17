@@ -1,6 +1,8 @@
 .chat{
 	width: 500px;
 	background-color: white;
+	padding-left: 30px;
+	text-align: left;
 }
 .post_edit{
 	margin: 20px 0px 0px 0px;
@@ -82,4 +84,46 @@
 	transition: all 0.5s ease;
 	background-color: #9be5e0;	 
 
+}
+
+/*post_detail*/
+.div_container{
+	display: flex;
+}
+
+.div_left{
+	background: #aaaaaa40;
+	flex: 1;
+	text-align: center;
+	line-height: 500px;
+}
+
+.div_left > a{
+	text-decoration: none;
+	font-size: 30px;
+	color: black;
+}
+.div_center{
+	background: #7cd3c6;
+	flex: 3;
+	text-align: center;
+	line-height: 500px;
+}
+
+.div_center > a{
+	text-decoration: none;
+	font-size: 40px;
+	color: black;
+}
+.div_right{
+	background: #aaaaaa40;
+	flex: 1;
+	text-align: center;
+	line-height: 500px;
+}
+
+.div_right > a{
+	text-decoration: none;
+	font-size: 30px;
+	color: black;
 }

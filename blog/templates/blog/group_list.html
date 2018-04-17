@@ -1,11 +1,16 @@
 {% extends 'blog/sub.html' %}
 {% load staticfiles%}
 {% block content %}
-<div class="result-container">
+<link rel="stylesheet" href="{% static 'css/group.css'  %}">
+
+
+<div class="post_list">
+	<h1 align="center">My Groups</h1>
     {% for g in groups %}
-    <div class=container>
-        <h1> <a href="{% url 'dic:group' url=g.url %}">{{ g.group_name }}</a></h1>
-    </div>
+    <ul class=container>
+        <li> <a href="{% url 'dic:group' url=g.url %}">{{ g.group_name }}</a></li>
+        <p></p>
+    </ul>
     {% endfor %}
 </div>
-{% endblock %}s
+{% endblock %}

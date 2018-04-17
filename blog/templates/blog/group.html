@@ -1,25 +1,31 @@
 {% extends 'blog/sub.html' %}
 {% load staticfiles%}
 {% block content %}
+ <link rel="stylesheet" href="{% static 'css/group.css'  %}">
+ 
+<div class = "post_list">
+	<h1 align="center">토의주제목록</h1>
+	<a href="{% url 'dic:post_new' url=group.url %}" >--토의주제 작성하기☞</a>
 
-<h3>그룹원 명단</h3>
-{%for name in group.user.all%}
-<div>
-	{{name.username}}
+	<div class="result-container">
+
+	    {% for post in group.posts.all %}
+	    <ul class=container>
+	        <li><a href="{% url 'dic:post_detail' pk=post.pk %}" >{{ post.title }}</a></li>
+	        <!--<p>{{ post.text|linebreaksbr }}</p>-->
+	        <p>published: {{ post.published_date }}</p>
+	    </ul>
+	    {% endfor %}
+	</div>
 </div>
-{% endfor %}
 
-<h1>토의주제목록</h1>
-<a href="{% url 'dic:post_new' url=group.url %}">토의주제 작성하기</a>
-<div class="result-container">
-
-    {% for post in group.posts.all %}
-    <div class=container>
-        <h1><a href="{% url 'dic:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-        <p>{{ post.text|linebreaksbr }}</p>
-        <p>published: {{ post.published_date }}</p>
-    </div>
-    {% endfor %}
+<div class = "group_user">
+	<h1 align="center">그룹원 명단</h1>
+	{%for name in group.user.all%}
+	<div>
+		> {{name.username}}
+	</div>
+	{% endfor %}
 </div>
 
 {% endblock %}

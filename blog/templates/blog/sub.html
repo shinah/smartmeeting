@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>SMART MEETING</title>
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <link rel="stylesheet" href="{% static 'css/blog.css'  %}">
         <link rel="stylesheet" href="{% static 'css/sub.css' %}">
         <link rel="stylesheet" href="{% static 'css/result.css' %}">
         <link rel="stylesheet" href="{% static 'css/content.css' %}">
@@ -17,7 +17,7 @@
         <div class="head-space"></div>
         <div class="header">
             <div class="header-text1 bolder">
-                <span><a href="/">smart meeting</a></span>
+                <span><a href="/">Smart Meeting :D</a></span>
             </div>
             <!--<a href="/"><img class="header-image" src="{% static 'image/EASIER_header.png' %}" alt="EASIER_header"/></a>-->
             <!--<div class="header-text1 bolder">
@@ -31,6 +31,7 @@
                         <span class="margin-right"><a href="/sign_up">SIGN UP</a></span>
                         <span><a href="/sign_in">SIGN IN</a></span>
                     {% else %}
+                        <span><a href="/group_list">My Groups</a></span>
                         <span><a href="/sign_out">SIGN OUT</a></span>
                     {% endif %}
                 </span>

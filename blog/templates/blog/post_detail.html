@@ -2,10 +2,12 @@
 
 {% block content %}
 <h3> 주제: {{ post.title }}</h3>
-	<p> {{ post.text|linebreaksbr }} </p> <!--주제 상세설명-->
-	<div><a href="{% url 'dic:chat_room' pk=post.pk %}">채팅방 이동</a></div>
-	<div><a href="">업무 분담표</a></div>
-	<div><a href="">공유 문서</a></div>
+<p> {{ post.text|linebreaksbr }} </p> <!--주제 상세설명-->
+<div class="div_container">
+    <div class="div_left"><a href="">업무 분담표</a></div>
+    <div class="div_center"><a href="{% url 'dic:chat_room' pk=post.pk %}">채팅방 이동</a></div>
+    <div class="div_right"><a href="">공유 문서</a></div>
+</div>
     <!--<div class="post">
         {% if post.published_date %}
             <div class="date">

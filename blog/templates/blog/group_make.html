@@ -10,12 +10,12 @@
 	    	{% csrf_token %}
 	    	
 	    	<p>그룹명</p>
-	    	<input type="text" size='30' name="group_name" requierd>
+	    	<input type="text" size='60' name="group_name" requierd>
 	    	<br>
-	    	<p>초대 링크</p>
-	    	<input type="text" size = '50' name="group_link" value="http://smartmeeting.pythonanywhere.com/group/{{a}}/group_invitation/" readonly>
+	    	<p>초대 링크  <button onclick="myFunction()" class="btn">Copy</button></p>
+	    	<input type="text" size = '60' name="group_link" value="http://smartmeeting.pythonanywhere.com/group/{{a}}/group_invitation/" id="myLink" readonly>
 	    	<br>
-	        <button type="submit" class="save btn btn-default">Save</button>
+	        <button type="submit" class="fButton">그룹 생성하기</button>
 	    </form>
     {% endif %}
 <!--로컬일때 그룹 주소: http://127.0.0.1:8000/group/{{a}}/group_invitation/-->
