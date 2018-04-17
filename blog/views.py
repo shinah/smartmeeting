@@ -28,7 +28,7 @@ def group_make(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             group = form.save(commit=False)
-            group.url = group.group_link[28:40]#변경부분
+            group.url = group.group_link[45:57]#변경부분
             group.published_date = timezone.now()
             group.save()
             user = get_object_or_404(User,username=request.user)
