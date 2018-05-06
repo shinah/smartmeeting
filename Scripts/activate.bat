@@ -1,5 +1,5 @@
 @echo off
-set "VIRTUAL_ENV=C:\Users\shinah\Desktop\smartmeeting"
+set "VIRTUAL_ENV=C:\Users\onmds\Desktop\smartmeeting"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

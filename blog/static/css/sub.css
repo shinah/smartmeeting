@@ -27,6 +27,7 @@
 .nav li a:hover:not(.sign_out){
     background-color: #111;
 }
+
 .sign_out{
      background-color: #4CAF50;
 }
