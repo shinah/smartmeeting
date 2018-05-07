@@ -12,13 +12,22 @@
 	    	<p>그룹명</p>
 	    	<input type="text" size='30' name="group_name" requierd>
 	    	<br>
+<<<<<<< Updated upstream
 	    	<p>초대 링크</p>
 	    	<input type="text" size = '50' name="group_link" value="http://127.0.0.1:8000/group/{{a}}/group_invitation/" readonly>
+=======
+	    	<p>초대 링크  <button onclick="myFunction()" class="btn">Copy</button></p>
+	    	<input type="text" size = '60' name="group_link" value="http://127.0.0.1:8000/group/{{a}}/group_invitation/" id="myLink" readonly>
+>>>>>>> Stashed changes
 	    	<br>
 	        <button type="submit" class="save btn btn-default">Save</button>
 	    </form>
     {% endif %}
+<<<<<<< Updated upstream
 
+=======
+<!--배포 그룹 주소: http://smartmeeting.pythonanywhere.com/group/{{a}}/group_invitation/-->
+>>>>>>> Stashed changes
 </div>
 <script>
 	$(".post-form > p > input").attr("class","fInput");

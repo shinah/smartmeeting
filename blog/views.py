@@ -4,9 +4,14 @@ import urllib.request
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
+from my import settings
 
 #모델 및 폼
+<<<<<<< Updated upstream
 from .models import Post, Group, User_belong
+=======
+from .models import Post, Group, Comment
+>>>>>>> Stashed changes
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
 from .forms import PostForm, UserForm, UserForm2, LoginForm, GroupForm, CommentForm
@@ -76,23 +81,46 @@ def post_list(request):
 	return render(request, 'blog/post_list.html', {'posts': posts})
 	
 def post_detail(request, pk):
-	post = get_object_or_404(Post, pk=pk)
-	return render(request, 'blog/post_detail.html', {'post': post})
-
-def chat_room(request,pk):
     post = get_object_or_404(Post, pk=pk)
+    return render(request, 'blog/post_detail.html', {'post': post})
+
+def chat_room(request, pk):
+    thisPost = get_object_or_404(Post, pk=pk)
+    comments = Comment.objects.all()
+    return render(request, "blog/chat_room.html", {'chat_room': 'active', 'comment': comments, 'post': thisPost})
+
+def post(request):
     if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.published_date = timezone.now()
-            comment.post = post
-            comment.save()
-            return redirect('dic:chat_room',pk = post.pk)
+        msg = request.POST.get('msgbox', None)
+        c = Comment(user=request.user, text=msg )
+
+        if msg != '':            
+            c.save()
+        return JsonResponse({ 'msg': msg, 'user': c.user.username})
     else:
-        form = CommentForm()
-    return render(request,'blog/chat_room.html',{'post':post,'form':form})
+        return HttpResponse('Request must be POST.')
+
+def messages(request, pk):
+    #thisPost = get_object_or_404(Post, pk=pk)
+    comments = Comment.objects.get(post = thisPost)
+    return render(request, 'blog/messages.html', {'comment': comments})
+
+
+    #comment = 
+#def chat_room(request,pk):
+#    post = get_object_or_404(Post, pk=pk)
+#    if request.method == "POST":
+#        form = CommentForm(request.POST)
+#        if form.is_valid():
+#            comment = form.save(commit=False)
+#            comment.author = request.user
+#            comment.published_date = timezone.now()
+#            comment.post = post
+#            comment.save()
+#            return redirect('dic:chat_room',pk = post.pk)
+#    else:
+#        form = CommentForm()
+#    return render(request,'blog/chat_room.html',{'post':post,'form':form})
 
 def signup(request):
     if request.method == "POST":

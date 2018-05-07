@@ -31,11 +31,12 @@ class Post(models.Model):
     return self.title
 
 class Comment(models.Model):
-  post = models.ForeignKey('Post',related_name='comments')
-  author=models.ForeignKey('auth.User',on_delete=models.PROTECT)
-  text = models.TextField()
+  post = models.TextField(null=True)
+  #post = models.ForeignKey('Post',related_name='comments')
+  user = models.ForeignKey('auth.User',on_delete=models.PROTECT)
+  text = models.TextField(null=True)
   created_date = models.DateTimeField(default=timezone.now)
-  published_date = models.DateTimeField(blank=True, null=True)
+  #published_date = models.DateTimeField(blank=True, null=True)
 
   def __str__(self):
     return self.text

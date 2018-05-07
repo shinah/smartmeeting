@@ -1,7 +1,7 @@
 {% extends 'blog/sub.html' %}
-{% load staticfiles%}
 {% block content %}
 
+<<<<<<< Updated upstream
 <div class="post_edit" align="center">
 	<h3> 주제: {{ post.title }}</h3>
 
@@ -22,3 +22,61 @@
 
 <script>
 </script>
+=======
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'chat.css' %}">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+</head>
+
+<body>
+    <div id="chat-body" class="panel panel-default">
+        <div class="panel-heading"><span style="color: purple">{{post.title}}</span> 의 채팅방 입니다.</div>
+        <div id="msg-list-div" class="panel-body">
+            <ul id="msg-list" class="list-group">
+              
+                {% for obj in comments %}
+
+                    {%if obj.user == request.user %}
+                        <li class="text-right list-group-item">{{ obj.message }}</li>
+                    {%else%}
+                        <li class="text-left list-group-item">{{ obj.message }}</li>
+                    {%endif%}   
+                {% empty %}
+                    <li class="text-right list-group-item">No messages yet!</li>
+                {% endfor %}
+                <script>
+                    var chatlist = document.getElementById('msg-list-div');
+                    chatlist.scrollTop = chatlist.scrollHeight;
+                </script>
+            </ul>
+        </div>
+    </div>
+
+    <form id="chat-form" method="post" action="/post/">{% csrf_token %}
+        <div id="chat-bottom" class="input-group">
+            <input type="text" id="chat-msg" name="chat-msg" class="form-control">
+            <span class="input-group-btn">
+            <div>
+                <input class="btn btn-primary" id="send" type="submit" value="Send">
+            </div>
+
+            </span>
+        </div>
+    </form>
+
+</body>
+<script src="{% static 'chat.js' %}"></script>
+</html>
+{% endblock %}
+>>>>>>> Stashed changes
