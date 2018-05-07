@@ -115,7 +115,7 @@ def vote_new(request,pk):
 def vote(request,pk,id):
     post = get_object_or_404(Post,pk=pk)
     vote = get_object_or_404(Vote,id=id)        
-    return render(request,'blog/vote.html',{'post':post,'vote':vote,'form':form})
+    return render(request,'blog/vote.html',{'post':post,'vote':vote})
 
 def signup(request):
     if request.method == "POST":
