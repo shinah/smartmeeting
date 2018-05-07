@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 #from django.forms import formset_factory
-from .models import Post,Group,Comment
+from .models import Post,Group,Comment,Vote
 from django.contrib.auth.models import User
 
 class GroupForm(forms.ModelForm):
@@ -18,6 +18,10 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('text',)
+class VoteForm(forms.ModelForm):
+    class Meta:
+        model = Vote
+        fields = ('vote_title','vote_text',)
 
 		
 class UserForm(forms.ModelForm):

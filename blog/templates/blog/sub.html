@@ -17,18 +17,17 @@
     </head>
     <body>
     <div class='nav'>
-    {% if not user.is_authenticatedr%}
+    {% if not user.is_authenticated%}
         <ul>
           <li><a href="/" >SMART MEETING</a></li>
-          <li><a href="/group_list">MY GROUPS</a></li>
-          <li><a href="/">Contact</a></li>
-          <li style="float:right"><a class="sign_out" href="about.asp">SIGN OUT</a></li>
         </ul>
-      {% else %}
+    {% else %}
         <ul>
           <li><a href="/" >SMART MEETING</a></li>
+          <li><a href="/group_list">MY GROUPS</a></li>s
+          <li style="float:right"><a class="sign_out" href="/sign_out">SIGN OUT</a></li>
         </ul> 
-        {%endif%}
+    {%endif%}
     </div> 
         {% block content %}
         {% endblock %} 

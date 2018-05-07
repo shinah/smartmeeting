@@ -21,6 +21,11 @@
 	right: 110px;
 	z-index: 4;
 }
+.title_1>img{
+	opacity: 1;
+	position: relative;
+}
+
 
 .wrap_description{
 	position: absolute;

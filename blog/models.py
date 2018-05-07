@@ -40,5 +40,15 @@ class Comment(models.Model):
   def __str__(self):
     return self.text
 
+class Vote(models.Model):
+  post = models.ForeignKey('Post',related_name='votes')
+  author=models.ForeignKey('auth.User',on_delete=models.PROTECT)
+  vote_title = models.CharField(max_length=200)
+  vote_text = models.TextField()
+  created_date = models.DateTimeField(default=timezone.now)
+  published_date = models.DateTimeField(blank=True, null=True)
+  def __str__(self):
+    return self.vote_title
+
  
 

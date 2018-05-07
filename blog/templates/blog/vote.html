@@ -1,0 +1,14 @@
+{% extends 'blog/sub.html' %}
+{% block content %}
+
+<h3>투표 제목:{{vote.vote_title}}</h3>
+<p>{{vote.vote_text}}</p>
+	<div>
+		<form method='POST'>
+		    {% csrf_token %}
+			<input type="submit" id='value1' VALUE='찬성'>
+			<input type="submit" id='value2' VALUE='반대'>
+			<input type="submit" id='value3' VALUE='보류'>
+		</form>
+	</div>
+{%endblock%}

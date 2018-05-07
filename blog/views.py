@@ -6,10 +6,10 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post, Group
+from .models import Post, Group, Comment, Vote
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm
+from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm
 
 from django.utils import timezone
 
@@ -95,6 +95,26 @@ def chat_room(request,pk):
     else:
         form = CommentForm()
     return render(request,'blog/chat_room.html',{'post':post,'form':form})
+
+def vote_new(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    if request.method=="POST":
+        form = VoteForm(request.POST)
+        if form.is_valid():
+            vote = form.save(commit=False)
+            vote.author = request.user
+            vote.published_date = timezone.now()
+            vote.post = post
+            vote.save()
+            return redirect('dic:vote',pk  =post.pk,id = vote.id)
+    else:
+        form = VoteForm()
+    return render(request,'blog/vote_edit.html',{'post':post,'form':form})
+
+def vote(request,pk,id):
+    post = get_object_or_404(Post,pk=pk)
+    vote = get_object_or_404(Vote,id=id)        
+    return render(request,'blog/vote.html',{'post':post,'vote':vote,'form':form})
 
 def signup(request):
     if request.method == "POST":

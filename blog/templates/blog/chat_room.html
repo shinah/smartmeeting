@@ -17,9 +17,15 @@
 		<textarea name='text' rows='4' cols='50' placeholder="채팅을 입력해주세요"></textarea>
 	    <button type="submit" class="save btn btn-default">Save</button>
 	</form>
+</div>
+<div class="select">
+	<p><a href="{% url 'dic:vote_new' pk=post.pk %}">투표 생성</a></p>
+	<p>업무 분담</p>
+	<p>문서 공유</p>
+</div>
 	{% endblock %}
 
-</div>
+
 
 <script>
 </script>
