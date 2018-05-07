@@ -26,7 +26,11 @@
 </head>
 <body>
     <div id="app"></div>
-
+	<div class="select">
+		<p><a href="{% url 'dic:vote_new' pk=post.pk %}">투표 생성</a></p>
+		<p>업무 분담</p>
+		<p>문서 공유</p>
+	</div>
     <script type="text/babel">
 
         class Message extends React.Component {
