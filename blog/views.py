@@ -6,10 +6,10 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post, Group, Comment, Vote
+from .models import Post, Group, Comment, Vote, doVote
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm
+from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm, doVoteForm
 
 from django.utils import timezone
 
@@ -28,8 +28,8 @@ def group_make(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             group = form.save(commit=False)
-            group.url = group.group_link[28:40]
-            #group.url = group.group_link[45:57]#변경부분
+            #group.url = group.group_link[28:40]
+            group.url = group.group_link[45:57]#변경부분
             group.published_date = timezone.now()
             group.save()
             user = get_object_or_404(User,username=request.user)
@@ -107,15 +107,56 @@ def vote_new(request,pk):
             vote.published_date = timezone.now()
             vote.post = post
             vote.save()
-            return redirect('dic:vote',pk  =post.pk,id = vote.id)
+            #return redirect('dic:vote',pk  =post.pk,id = vote.id)
+            return redirect('dic:vote_list',pk=post.pk)
+
     else:
         form = VoteForm()
     return render(request,'blog/vote_edit.html',{'post':post,'form':form})
+    
+def vote_list(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    return render(request, 'blog/vote_list.html', {'post': post})
+
+def vote_result(request,doVote_id):
+    dovote = get_object_or_404(doVote,doVote_id=dovote.id)
+    return render(request,'blog/vote_result.html',{'dovote':dovote})
 
 def vote(request,pk,id):
     post = get_object_or_404(Post,pk=pk)
-    vote = get_object_or_404(Vote,id=id)        
-    return render(request,'blog/vote.html',{'post':post,'vote':vote})
+    vote = get_object_or_404(Vote,id=id)
+    if 'value1' in request.POST:
+        form = doVoteForm(request.POST)
+        dovote = form.save(commit=False)
+        dovote.agree = dovote.agree+1
+        dovote.num = dovote.num+1
+        dovote.vote = vote
+        dovote.save()
+        #return redirect('dic:chat_room',pk = post.pk)
+        return redirect('dic:vote_list',pk=post.pk)
+    elif 'value2' in request.POST:
+        form = doVoteForm(request.POST)
+        if form.is_valid():
+            dovote = form.save(commit=False)
+            dovote.disagree = dovote.disagree+1
+            dovote.num = dovote.num+1
+            dovote.vote = vote
+            dovote.save()
+        return redirect('dic:vote_result',doVote_id = dovote.id)
+    elif 'value3' in request.POST:
+        form = doVoteForm(request.POST)
+        if form.is_valid():
+            dovote = form.save(commit=False)
+            dovote.disagree = dovote.disagree+1
+            dovote.num = dovote.num+1
+            dovote.vote = vote
+            dovote.save()
+        return redirect('dic:vote_result',doVote_id = dovote.id)
+    else:
+        form = doVoteForm()
+
+    return render(request,'blog/vote.html',{'post':post,'vote':vote,'form':form})
+
 
 def signup(request):
     if request.method == "POST":

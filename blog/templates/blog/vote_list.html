@@ -1,0 +1,12 @@
+{% extends 'blog/sub.html' %}
+{% load staticfiles%}
+{% block content %}
+<h1></h1>
+<div class="result-container">
+    {% for vote in post.votes.all %}
+    <div class=container>
+        <h1><a href="{% url 'dic:vote' pk=post.pk id=vote.id %}">{{ vote.vote_title }}</a></h1>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

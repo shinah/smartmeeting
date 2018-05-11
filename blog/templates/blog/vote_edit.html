@@ -10,19 +10,15 @@
 	    <h3>위 주제와 관련한 투표를 생성해주세요.</h3>
 	    <form method="POST" class="post-form" >
 	    	{% csrf_token %}
-	        {{ form.as_p }}
-	        <button type="submit" class="save btn btn-default">Save</button>
+	    	<input type="text" size='40' name="vote_title" placeholder="투표제목을 입력해주세요" requierd>
+	    	<input type="text" size='70' name="vote_text" placeholder="투표내용을 입력해주세요" requierd>
+	    	<input type="text" size='10' name="vote_num" placeholder="참여인원"requierd>
+	    	<button type="submit" class="save btn btn-default">Save</button>
 	    </form>
     {% endif %}
 
 </div>
 <script>
-	$(".post-form > p > input").attr("class","fInput");
-	$(".post-form > p > textarea").attr("class","fTextarea");
-	$(".post-form > button").attr("class","fButton")
-	$(".fInput").attr("placeholder","투표 제목을 적어주세요.");
-	$(".fTextarea").attr("placeholder","내용을 적어주세요.");
-
 	// $( ".wrapInput" ).prepend( "<div class=\"input-label\">TITLE</div>" );
 </script>
 {% endblock %}

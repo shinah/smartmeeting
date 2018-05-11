@@ -6,9 +6,9 @@
 	<div>
 		<form method='POST'>
 		    {% csrf_token %}
-			<input type="submit" id='value1' VALUE='찬성'>
-			<input type="submit" id='value2' VALUE='반대'>
-			<input type="submit" id='value3' VALUE='보류'>
+			<input type="submit" name='value1' VALUE='찬성'>
+			<input type="submit" name='value2' VALUE='반대'>
+			<input type="submit" name='value3' VALUE='보류'>
 		</form>
 	</div>
 {%endblock%}
