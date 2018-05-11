@@ -10,7 +10,6 @@ from .models import Post, Group, Comment, Vote, doVote
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
 from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm, doVoteForm
-
 from django.utils import timezone
 
 from .group import *
@@ -79,23 +78,8 @@ def post_list(request):
 	return render(request, 'blog/post_list.html', {'posts': posts})
 	
 def post_detail(request, pk):
-	post = get_object_or_404(Post, pk=pk)
-	return render(request, 'blog/post_detail.html', {'post': post})
-
-def chat_room(request,pk):
     post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.published_date = timezone.now()
-            comment.post = post
-            comment.save()
-            return redirect('dic:chat_room',pk = post.pk)
-    else:
-        form = CommentForm()
-    return render(request,'blog/chat_room.html',{'post':post,'form':form})
+    return render(request, 'blog/post_detail.html', {'post': post})
 
 def vote_new(request,pk):
     post = get_object_or_404(Post,pk=pk)
@@ -103,7 +87,6 @@ def vote_new(request,pk):
         form = VoteForm(request.POST)
         if form.is_valid():
             vote = form.save(commit=False)
-            vote.author = request.user
             vote.published_date = timezone.now()
             vote.post = post
             vote.save()
@@ -118,9 +101,9 @@ def vote_list(request,pk):
     post = get_object_or_404(Post,pk=pk)
     return render(request, 'blog/vote_list.html', {'post': post})
 
-def vote_result(request,doVote_id):
-    dovote = get_object_or_404(doVote,doVote_id=dovote.id)
-    return render(request,'blog/vote_result.html',{'dovote':dovote})
+def vote_result(request,id):
+    vote = get_object_or_404(Vote,id=id)
+    return render(request,'blog/vote_result.html',{'vote':vote})
 
 def vote(request,pk,id):
     post = get_object_or_404(Post,pk=pk)
@@ -128,30 +111,54 @@ def vote(request,pk,id):
     if 'value1' in request.POST:
         form = doVoteForm(request.POST)
         dovote = form.save(commit=False)
-        dovote.agree = dovote.agree+1
-        dovote.num = dovote.num+1
-        dovote.vote = vote
+        dovote.id = vote.id
+        dovote.vote_title = vote.vote_title
+        dovote.vote_text = vote.vote_text
+        dovote.vote_num = vote.vote_num
+        dovote.post = vote.post
+        dovote.agree = vote.agree+1
+        dovote.disagree = vote.disagree
+        dovote.nothing = vote.nothing
+        dovote.num = vote.num+1
         dovote.save()
+        user = get_object_or_404(User,username=request.user)
+        dovote.user.add(user)
         #return redirect('dic:chat_room',pk = post.pk)
         return redirect('dic:vote_list',pk=post.pk)
     elif 'value2' in request.POST:
         form = doVoteForm(request.POST)
         if form.is_valid():
             dovote = form.save(commit=False)
-            dovote.disagree = dovote.disagree+1
-            dovote.num = dovote.num+1
-            dovote.vote = vote
+            dovote.id = vote.id
+            dovote.vote_title = vote.vote_title
+            dovote.vote_text = vote.vote_text
+            dovote.vote_num = vote.vote_num
+            dovote.post = vote.post            
+            dovote.disagree = vote.disagree+1
+            dovote.agree = vote.agree
+            dovote.nothing = vote.nothing
+            dovote.num = vote.num+1
             dovote.save()
-        return redirect('dic:vote_result',doVote_id = dovote.id)
+            user = get_object_or_404(User,username=request.user)
+            dovote.user.add(user)
+            return redirect('dic:vote_list',pk=post.pk)
     elif 'value3' in request.POST:
         form = doVoteForm(request.POST)
         if form.is_valid():
             dovote = form.save(commit=False)
-            dovote.disagree = dovote.disagree+1
-            dovote.num = dovote.num+1
-            dovote.vote = vote
+            dovote.id = vote.id
+            dovote.vote_title = vote.vote_title
+            dovote.vote_text = vote.vote_text
+            dovote.vote_num = vote.vote_num
+            dovote.post = vote.post 
+            dovote.nothing = vote.nothing+1
+            dovote.disagree = vote.disagree
+            dovote.agree = vote.agree
+            dovote.num = vote.num+1
             dovote.save()
-        return redirect('dic:vote_result',doVote_id = dovote.id)
+            user = get_object_or_404(User,username=request.user)
+            dovote.user.add(user)
+            return redirect('dic:vote_list',pk=post.pk)
     else:
         form = doVoteForm()
 
@@ -190,3 +197,7 @@ def signin(request):
         form = LoginForm()
         isuser = 1
         return render(request, 'blog/sign_in.html', {'form': form, 'isuser':isuser})
+
+def chat(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    return render(request, 'blog/chat.html',{'post':post})

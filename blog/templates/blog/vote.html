@@ -1,14 +1,17 @@
 {% extends 'blog/sub.html' %}
 {% block content %}
-
-<h3>투표 제목:{{vote.vote_title}}</h3>
-<p>{{vote.vote_text}}</p>
-	<div>
-		<form method='POST'>
-		    {% csrf_token %}
-			<input type="submit" name='value1' VALUE='찬성'>
-			<input type="submit" name='value2' VALUE='반대'>
-			<input type="submit" name='value3' VALUE='보류'>
-		</form>
-	</div>
+{%if request.user not in vote.user.all %}
+	<h3>투표 제목:{{vote.vote_title}}</h3>
+	<p>{{vote.vote_text}}</p>
+		<div>
+			<form method='POST'>
+			    {% csrf_token %}
+				<input type="submit" name='value1' VALUE='찬성'>
+				<input type="submit" name='value2' VALUE='반대'>
+				<input type="submit" name='value3' VALUE='보류'>
+			</form>
+		</div>
+	{%else%}
+		<h3>이미 참여 하셨습니다.</h3>
+	{%endif%}
 {%endblock%}

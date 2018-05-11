@@ -24,7 +24,7 @@ class VoteForm(forms.ModelForm):
         fields = ('vote_title','vote_text','vote_num',)
 class doVoteForm(forms.ModelForm):
     class Meta:
-        model = doVote
+        model = Vote
         fields=()
 
 		

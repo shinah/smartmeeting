@@ -42,10 +42,14 @@ class Comment(models.Model):
 
 class Vote(models.Model):
   post = models.ForeignKey(Post,related_name='votes',null=True)
-  author=models.ForeignKey('auth.User',on_delete=models.PROTECT)
+  user=models.ManyToManyField('auth.User',related_name='vote_user', default=None)
   vote_title = models.CharField(max_length=200)
   vote_text = models.TextField()
   vote_num = models.IntegerField(null=True)
+  num = models.IntegerField(default=0)
+  agree = models.IntegerField(default=0)
+  disagree = models.IntegerField(default=0)
+  nothing = models.IntegerField(default=0)
   created_date = models.DateTimeField(default=timezone.now)
   published_date = models.DateTimeField(blank=True, null=True)
   def __str__(self):

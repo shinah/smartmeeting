@@ -59,4 +59,11 @@ ul.container{
 	left: 900px;
 	margin-top: 20px;
 }
+.now_vote_list {
+	display: inline-block;
+	position: absolute;
+	left: 900px;
+	margin-top: 300px;
+}
+
 

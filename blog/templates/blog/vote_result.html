@@ -1,1 +1,66 @@
-<h1>hi</h1>
+
+{% extends 'blog/sub.html' %}
+{% block content %} 
+<script>
+		var data=[];
+		var grade = ["찬성(green)", "반대(red)", "보류(yellow)"];
+		var colors = ["#6bcea2","#ce886b","#FFE66D"];
+	function value1(){
+
+		var a1 = {{vote.agree}};
+		var b1 = {{vote.disagree}};
+		var c1 = {{vote.nothing}};
+
+		data.push(a1);
+		data.push(b1);
+		data.push(c1);
+	}
+	function clear(){
+		data=[];
+	}
+     function plotData() {
+		value1();
+		var canvas;
+		var ctx;
+		var endpoint = 0;
+		var total=0;
+
+		canvas = document.getElementById("piechart");
+		ctx = canvas.getContext("2d");
+		ctx2 = canvas.getContext("2d");
+		ctx2.font="20px arial";
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		for(var j=0; j<data.length; j++){
+			 total += data[j];
+		}
+
+		for (var i = 0; i < data.length; i++) {
+		ctx.fillStyle = colors[i];
+		ctx.beginPath();
+		ctx.moveTo(400,400);
+		ctx.arc(400,400,230,endpoint,endpoint+
+		  (Math.PI*2*(data[i]/total)),false);
+		ctx.lineTo(400,400);
+		ctx.fill();
+		endpoint += Math.PI*2*(data[i]/total);
+		}
+		for (var i=0;i<data.length;i++)
+		 {
+			 var per = parseInt(data[i]/total*100) + "%";
+			 ctx2.fillStyle="black";
+			 var sen = grade[i]+":"+ per;
+			 ctx2.fillText(sen,10,70+i*40);
+		 }
+		clear();
+	}
+  </script>
+ </head>
+ <body>
+  <form name="fr">
+  <input type="button" value="차트 그리기" onclick="plotData();">
+  </form>
+   <canvas id="piechart" width="700" height="700" style="background-color:#c6b9e400">
+
+ </body>
+ {% endblock %}
