@@ -6,10 +6,10 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post, Group, Comment, Vote
+from .models import Post, Group, Vote
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm
+from .forms import PostForm, UserForm, LoginForm, GroupForm, VoteForm
 
 from django.utils import timezone
 
@@ -79,23 +79,44 @@ def post_list(request):
 	return render(request, 'blog/post_list.html', {'posts': posts})
 	
 def post_detail(request, pk):
-	post = get_object_or_404(Post, pk=pk)
-	return render(request, 'blog/post_detail.html', {'post': post})
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'blog/post_detail.html', {'post': post})
 
 def chat_room(request,pk):
-    post = get_object_or_404(Post, pk=pk)
+   #post = Post.objects.get(pk=pk)
+    #c = Chat.objects.all()
+    
+    #if c == None:
+    #    c_O = Chat.objects.create(user=request.user, post = post)
+    #    print(c)
+    #c = Chat.objects.filter(post=post)
+    #c = get_object_or_404(Chat, post = post)
+
+    return redirect('chat/')
+
+
+
+    #        return redirect('dic:chat_room',pk = post.pk)
+    #else:
+    #    form = CommentForm()
+    #return render(request,'blog/chat_room.html',{'post':post,'form':form})
+def Posting(request):
     if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.author = request.user
-            comment.published_date = timezone.now()
-            comment.post = post
-            comment.save()
-            return redirect('dic:chat_room',pk = post.pk)
+        msg = request.POST.get('msgbox', None)
+        #print(msg)가 None
+        #여기서 인스턴스로 저장
+        c = Chat(user=request.user, message=msg)
+
+        if msg != '':            
+            c.save()
+        #mg = src="https://scontent-ord1-1.xx.fbcdn.net/hprofile-xaf1/v/t1.0-1/p160x160/11070096_10204126647988048_6580328996672664529_n.jpg?oh=f9b916e359cd7de9871d8d8e0a269e3d&oe=576F6F12"
+        return JsonResponse({ 'msg': msg, 'user': c.user.username})
     else:
-        form = CommentForm()
-    return render(request,'blog/chat_room.html',{'post':post,'form':form})
+        return HttpResponse('Request must be POST.')
+
+def messages(request):
+    c = Chat.objects.all()
+    return render(request, 'blog/messages.html', {'chat': c})
 
 def vote_new(request,pk):
     post = get_object_or_404(Post,pk=pk)
@@ -149,3 +170,6 @@ def signin(request):
         form = LoginForm()
         isuser = 1
         return render(request, 'blog/sign_in.html', {'form': form, 'isuser':isuser})
+
+def chat(request):
+    return render(request, 'blog/chat.html')

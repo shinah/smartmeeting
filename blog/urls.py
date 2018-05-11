@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^post/(?P<url>\w+)/new/$',views.post_new, name='post_new'),
     url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
     url(r'^post/chat_room/(?P<pk>\d+)/$',views.chat_room,name='chat_room'),
+    url(r'^posting/$', views.Posting, name='posting'),
+    url(r'^messages/$', views.messages, name='messages'),
     url(r'^post/chat_room/vote/new/(?P<pk>\d+)/$',views.vote_new,name='vote_new'),
     url(r'^post/chat_room/vote/(?P<pk>\d+)/(?P<id>\d+)/$',views.vote,name='vote'),
     url(r'^post_list$', views.post_list, name='post_list'),
@@ -21,4 +23,6 @@ urlpatterns = [
     url(r'^sign_in/$', views.signin, name='sign_in'),
     url('^sign_out/$', auth_views.logout, {'next_page' : '/'}),
     
+
+    url(r'^chat/$', views.chat, name='chat'),
 ]

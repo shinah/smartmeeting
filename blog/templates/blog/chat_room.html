@@ -2,184 +2,67 @@
 {% load staticfiles%}
 {% block content %}
 
-{% load static i18n %}
-<!DOCTYPE html>
-<html lang="en">
+
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Chat powered by Channels</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}"></style>
-    <link href='https://fonts.googleapis.com/css?family=Roboto&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <div><title>Chatting</title></div>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'chat.css' %}">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
-    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-    <script src="https://fb.me/react-15.0.1.min.js"></script>
-    <script src="https://fb.me/react-dom-15.0.1.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-    <script>
-     $(function(){
-         eval(Babel.transform($('script[type="text/babel"]').text(), {
-             presets: ['es2015', 'react', 'stage-0']
-         }).code)
-     })
-     </script>
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
 </head>
+
 <body>
-    <div id="app"></div>
-	<div class="select">
-		<p><a href="{% url 'dic:vote_new' pk=post.pk %}">투표 생성</a></p>
-		<p>업무 분담</p>
-		<p>문서 공유</p>
-	</div>
-    <script type="text/babel">
+    <div class="select">
+        <p><a href="{% url 'dic:vote_new' pk=post.pk %}">투표 생성</a></p>
+        <p>업무 분담</p>
+        <p>문서 공유</p>
+    </div>
 
-        class Message extends React.Component {
-            render() {
-                let className = "message message--" + this.props.type;
-                return (
-                    <div className={className}>
-                        {this.props.user ?
-                            <span className="message__username">
-                                {this.props.user}:
-                            </span>
-                            : null
-                        }
-                        <span className="message__text">
-                            {this.props.text}
-                        </span>
-                    </div>
-                )
-            }
-        }
+    <div id="chat-body" class="panel panel-default">
+        <div class="panel-heading">{{post.title}} 의 채팅방입니다.</div>
+        <div id="msg-list-div" class="panel-body">
+            <ul id="msg-list" class="list-group">
+              
+                {% for obj in chat %}
+                    {%if obj.user == request.user %}
+                        <li class="text-right list-group-item">{{ obj.message }}</li>
+                    {%else%}
+                        <li class="text-left list-group-item">{{ obj.message }}</li>
+                    {%endif%}   
+                {% empty %}
+                        <li class="text-right list-group-item">No messages yet!</li>
+                {% endfor %}
+                <script>
+                    var chatlist = document.getElementById('msg-list-div');
+                    chatlist.scrollTop = chatlist.scrollHeight;
+                </script>
+            </ul>
+        </div>
+    </div>
 
-        class MessagesWindow extends React.Component {
-            componentWillUpdate = () => {
-              let node = ReactDOM.findDOMNode(this);
-              let currentPosition = Math.round(node.scrollTop + node.offsetHeight);
-              this.shouldScrollBottom = Math.abs(currentPosition - node.scrollHeight) < Math.abs(5);
-            }
+    <form id="chat-form" method="post" action="/posting/">{% csrf_token %}
+        <div id="chat-bottom" class="input-group">
+            <input type="text" id="chat-msg" name="chat-msg" class="form-control"/>
+            <span class="input-group-btn">
+            <div>
+                <input class="btn btn-primary" id="send" type="submit" value="Send"/>
+            </div>
 
-            componentDidUpdate = () => {
-              if (this.shouldScrollBottom) {
-                let node = ReactDOM.findDOMNode(this);
-                node.scrollTop = node.scrollHeight;
-              }
-            }
-
-            render() {
-                let messages = this.props.messages.map((item) => {
-                    return <Message {...item} />
-                })
-
-                return (
-                    <div ref="messagesWindow" className="messages">
-                        {messages}
-                    </div>
-                )
-            }
-        }
-
-        class ChatWindow extends React.Component {
-            state = {
-                username: this.props.username || null,
-                online: false,
-                messages: []
-            }
-
-            render() {
-
-                let connectToolbarClass = "connect-toolbar";
-                if (this.state.online) {
-                    connectToolbarClass += " connect-toolbar--online";
-                }
-
-                return (
-                    <div className="chat-window">
-                        <div className={connectToolbarClass}>
-                            <input defaultValue={this.state.username}
-                                placeholder="Представьтесь"
-                                className="connect-toolbar__username"
-                                type="text"
-                                ref="username" />
-                            <button className="connect-toolbar__connect-button" onClick={this.connect}>{this.props.joinButtonText}</button>
-                        </div>
-
-                        <MessagesWindow messages={this.state.messages} />
-
-                        <div className="message-toolbar">
-                            <input onKeyPress={this.onMessage}
-                                ref="message_input"
-                                type="text"
-                                placeholder={this.props.messageInputPlaceholder}
-                                className="message-toolbar__text-input" />
-                        </div>
-                    </div>
-                )
-            }
-
-            connect = () => {
-                let username = this.refs.username.value
-                this.setState({username: username})
-                localStorage.username = username;
-
-                let socket = new WebSocket("ws://" + location.host + "/chat/main");
-                this.socket = socket;
-                socket.onmessage = (e) => {
-                    let {messages} = this.state;
-                    messages.push(JSON.parse(e.data));
-                    this.setState({messages: messages})
-                }
-                socket.onopen = () => {
-                    socket.send(JSON.stringify({
-                        type: 'connect',
-                        username: this.state.username
-                    }))
-                    this.setState({online: true})
-                }
-            }
-
-            onMessage = (e) => {
-                if (e.nativeEvent.keyCode != 13) {
-                    return
-                }
-
-                let text = e.target.value;
-
-                if (text == "") {
-                    return
-                }
-
-                let message = {
-                    type: 'message',
-                    text: text
-                }
-                // send message
-                this.socket.send(JSON.stringify(message));
-
-                this.refs.message_input.value = '';
-            }
-        }
-
-        let options = {
-            username: localStorage.username,
-            joinButtonText: '{% trans "Join chat" %}',
-            messageInputPlaceholder: '{% trans "Enter your message" %}'
-        }
-        ReactDOM.render(<ChatWindow {...options} />, document.getElementById('app'))
-    </script>
+            </span>
+        </div>
+    </form>
 </body>
+<script src="{% static 'chat.js' %}"></script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
+{% endblock %}
 
 <!--
 
@@ -204,7 +87,6 @@
 	<p>업무 분담</p>
 	<p>문서 공유</p>
 </div>
-	{% endblock %}
 
 
 
