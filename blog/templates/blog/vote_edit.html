@@ -1,0 +1,24 @@
+{% extends 'blog/sub.html' %}
+{% block content %}
+
+<div class="post_edit" align="center">
+	{% if not user.is_authenticated %}
+	<h1>x토의 주제를 만드시려면 로그인이 필요합니다.</h1>
+	<h2><a href="/sign_in">로그인 하러가기 Click!</a></h2>
+	{% else %}
+	    <h1>"{{ post.title }}"</h1>
+	    <h3>위 주제와 관련한 투표를 생성해주세요.</h3>
+	    <form method="POST" class="post-form" >
+	    	{% csrf_token %}
+	    	<input type="text" size='40' name="vote_title" placeholder="투표제목을 입력해주세요" requierd>
+	    	<input type="text" size='70' name="vote_text" placeholder="투표내용을 입력해주세요" requierd>
+	    	<input type="text" size='10' name="vote_num" placeholder="참여인원"requierd>
+	    	<button type="submit" class="save btn btn-default">Save</button>
+	    </form>
+    {% endif %}
+
+</div>
+<script>
+	// $( ".wrapInput" ).prepend( "<div class=\"input-label\">TITLE</div>" );
+</script>
+{% endblock %}

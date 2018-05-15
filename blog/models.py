@@ -31,7 +31,7 @@ class Post(models.Model):
     return self.title
 
 class Comment(models.Model):
-  post = models.ForeignKey('Post',related_name='comments')
+  post = models.ForeignKey(Post,related_name='comments',null=True)
   author=models.ForeignKey('auth.User',on_delete=models.PROTECT)
   text = models.TextField()
   created_date = models.DateTimeField(default=timezone.now)
@@ -40,5 +40,24 @@ class Comment(models.Model):
   def __str__(self):
     return self.text
 
- 
+class Vote(models.Model):
+  post = models.ForeignKey(Post,related_name='votes',null=True)
+  user=models.ManyToManyField('auth.User',related_name='vote_user', default=None)
+  vote_title = models.CharField(max_length=200)
+  vote_text = models.TextField()
+  vote_num = models.IntegerField(null=True)
+  num = models.IntegerField(default=0)
+  agree = models.IntegerField(default=0)
+  disagree = models.IntegerField(default=0)
+  nothing = models.IntegerField(default=0)
+  created_date = models.DateTimeField(default=timezone.now)
+  published_date = models.DateTimeField(blank=True, null=True)
+  def __str__(self):
+    return self.vote_title
 
+class doVote(models.Model):
+  vote = models.ForeignKey(Vote,related_name='doVote')
+  num = models.IntegerField(default=0)
+  agree = models.IntegerField(default=0)
+  disagree = models.IntegerField(default=0)
+  nothing = models.IntegerField(default=0)

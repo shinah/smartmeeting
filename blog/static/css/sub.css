@@ -1,51 +1,33 @@
-/***header - result&content공통***/
-.head-space{
-	height: 100px;
+
+.nav>ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
 }
 
-.header-image{
-	position: absolute;
-	top: 25px;
-	left: 40px;
+.nav li {
+    float: left;
 }
 
-.header-text1{
-	position: absolute;
-	left: 50px;
-	top: 40px;
-	font-size: 26px;
-}
-.header-text1> span > a{
-
-	text-decoration: none;
-	margin: 0 18px 0 0;
-	color: #23b2b2;
-}
-/*.header-text1> span:first-child{
-	margin: 0 18px 0 0;*/
-}
-.header-text1> span:nth-child(2){
-	color: #555;
-}
-.header-text2> span{
-	position:absolute;
-	top: 50px;
-	right: 50px;
-	
-}
-.header-text2> span > span > a{
-	text-decoration: none;
-	font-size: 20px;
-	color: #333;
-	margin-right: 20px;
-	top: 50px;
+.nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-.header-text2> span > span > a:hover{
-	color: #333;
-	transition: all 0.5s ease;
-	color: #7cd3c6;
+/* Change the link color to #111 (black) on hover */
+.nav li a:hover {
+    background-color: #111;
 }
 
+.nav li a:hover:not(.sign_out){
+    background-color: #111;
+}
 
-
+.sign_out{
+     background-color: #4CAF50;
+}
