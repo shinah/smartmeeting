@@ -1,0 +1,21 @@
+{% extends 'blog/sub.html' %}
+{% load staticfiles%}
+{% block content %}
+<h1></h1>
+<div class="">
+    {% for vote in post.votes.all %}
+    <div class=container>
+        <h3>
+        	{%if vote.vote_num != vote.num %}
+        	        [진행중 투표]
+        			<a href="{% url 'dic:vote' pk=post.pk id=vote.id %}">{{ vote.vote_title }}</a>
+        	{%else%}
+        			[완료된 투표]
+        			<a href="{% url 'dic:vote_result' id=vote.id %}">{{ vote.vote_title }}</a>
+        	{% endif %}
+
+        </h3>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
