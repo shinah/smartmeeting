@@ -1,6 +1,8 @@
 {% extends 'blog/sub.html' %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/vote.css'  %}">
 {%if request.user not in vote.user.all %}
+<div class="vote">
 	<h3>투표 제목:{{vote.vote_title}}</h3>
 	<p>{{vote.vote_text}}</p>
 		<div>
@@ -14,4 +16,5 @@
 	{%else%}
 		<h3>이미 참여 하셨습니다.</h3>
 	{%endif%}
+</div>
 {%endblock%}
