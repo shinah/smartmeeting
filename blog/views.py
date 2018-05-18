@@ -6,10 +6,10 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post, Group, Comment, Vote, Document, Task
+from .models import Post, Group, Vote, Document, Task
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm, DocumentForm, TaskForm
+from .forms import PostForm, UserForm, LoginForm, GroupForm, VoteForm, DocumentForm, TaskForm
 from django.utils import timezone
 
 from .group import *

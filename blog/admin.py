@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Group, Comment, Vote, Document, Task
+from .models import Post, Group, Vote, Document, Task
 
 admin.site.register(Post)
 admin.site.register(Group)
