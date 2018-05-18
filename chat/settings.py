@@ -25,7 +25,7 @@ SECRET_KEY = 'pkufdthf!7!1%0oewk6gid-%k9l^4u@)a#o*mu1v%^7pt_n2rm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com','localhost', 'onmds.cafe24.com']
 
 
 # Application definition
@@ -123,14 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-<<<<<<< HEAD:my/settings.py
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
-=======
-<<<<<<< HEAD:my/settings.py
-STATIC_ROOT = os.path.abspath (os.path.join (BASE_DIR, 'smartmeeting', 'static'))
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-=======
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATIC_ROOT = os.path.join(BASE_DIR,'smartmeeting','static')
 
 CHANNEL_LAYERS = {
     "default": {
@@ -138,5 +132,4 @@ CHANNEL_LAYERS = {
         "ROUTING": "chat.routing.routing",
     },
 }
->>>>>>> bc8a96b367861b82caf272b60be95a4b3ff31999:chat/settings.py
->>>>>>> dd6624655056adfd3e8c1f4dea21a602d33a2d84:chat/settings.py
+
