@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 #from django.forms import formset_factory
-from .models import Post,Group,Comment,Vote,doVote
+from .models import Post,Group,Vote,doVote,Task
 from django.contrib.auth.models import User
 
 class GroupForm(forms.ModelForm):
@@ -14,10 +14,11 @@ class PostForm(forms.ModelForm):
 		model = Post
 		fields = ('title', 'text',)
 
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ('text',)
+#class CommentForm(forms.ModelForm):
+#    class Meta:
+#        model = Comment
+#        fields = ('text',)
+
 class VoteForm(forms.ModelForm):
     class Meta:
         model = Vote
@@ -27,7 +28,7 @@ class doVoteForm(forms.ModelForm):
         model = Vote
         fields=()
 
-		
+
 class UserForm(forms.ModelForm):
   class Meta:
     model = User
@@ -47,3 +48,8 @@ class LoginForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'placeholder':'Name'}),
             'password' : forms.PasswordInput(attrs={'placeholder':'Password'}),
         }
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['toDo','thisUser','deadline']
