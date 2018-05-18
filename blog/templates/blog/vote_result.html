@@ -1,9 +1,12 @@
 
 {% extends 'blog/sub.html' %}
+{% load staticfiles%}
 {% block content %} 
+<head>
+<link rel="stylesheet" href="{% static 'css/vote.css'  %}">
 <script>
 		var data=[];
-		var grade = ["찬성(green)", "반대(red)", "보류(yellow)"];
+		var grade = ["찬성[green]", "반대[red]", "보류[yellow]"];
 		var colors = ["#6bcea2","#ce886b","#FFE66D"];
 	function value1(){
 
@@ -57,10 +60,15 @@
   </script>
  </head>
  <body>
-  <form name="fr">
-  <input type="button" value="차트 그리기" onclick="plotData();">
-  </form>
-   <canvas id="piechart" width="700" height="700" style="background-color:#c6b9e400">
-
+ 	<div class="vote_result">
+	 	<h3>{{vote.vote_title}}의 투표 결과</h3>
+	 	<h3>총 {{vote.vote_num}}명이 투표에 참여했습니다.</h3>
+	  <form name="fr">
+	  		<input type="button" value="결과 보기" onclick="plotData();">
+	  </form>
+	   <canvas id="piechart" width="700" height="700" style="background-color:#c6b9e400">
+	   </canvas>
+	   	<p><h4>찬성 -  {{vote.agree}}명</h4><h4>반대 -  {{vote.disagree}}명</h4><h4>보류 -  {{vote.nothing}}명</h4></p>
+	 </div>
  </body>
- {% endblock %}
+{% endblock %}
