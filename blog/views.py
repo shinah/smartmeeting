@@ -6,10 +6,10 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post, Group, Comment, Vote, doVote
+from .models import Post, Group, Comment, Vote, Document, Task
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm, doVoteForm
+from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm, DocumentForm, TaskForm
 from django.utils import timezone
 
 from .group import *
@@ -28,7 +28,8 @@ def group_make(request):
         if form.is_valid():
             group = form.save(commit=False)
             #group.url = group.group_link[28:40]
-            group.url = group.group_link[45:57]#변경부분
+            #group.url = group.group_link[45:57]#변경부분
+            group.url = group.group_link[30:42]
             group.published_date = timezone.now()
             group.save()
             user = get_object_or_404(User,username=request.user)
@@ -164,6 +165,37 @@ def vote(request,pk,id):
 
     return render(request,'blog/vote.html',{'post':post,'vote':vote,'form':form})
 
+def file_new(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    if request.method == "POST":
+        form = DocumentForm(request.POST,request.FILES)
+        if form.is_valid():
+            newdoc = form.save(commit=False)
+            newdoc.post = post
+            newdoc.user = request.user
+            newdoc.save()
+            return redirect('dic:post_detail',pk=post.pk)
+    else:
+        form = DocumentForm()
+    return render(request,'blog/file_new.html',{'post':post,'form':form})
+
+def task_new(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    group = post.group
+    users = group.user.all() #ㅜㅜ드디어
+
+    if request.method=="POST":
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.post = post
+            task.user = request.user
+            task.save()
+            return redirect('/')
+            #return redirect('dic:task_list',pk=post.pk)
+    else:
+        form = TaskForm()
+    return render(request,'blog/task_new.html',{'post':post,'form':form, 'users':users})
 
 def signup(request):
     if request.method == "POST":

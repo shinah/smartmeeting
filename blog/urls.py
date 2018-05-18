@@ -16,7 +16,13 @@ urlpatterns = [
     url(r'^post/chat_room/vote/new/(?P<pk>\d+)/$',views.vote_new,name='vote_new'),
     url(r'^post/chat_room/vote/(?P<pk>\d+)/(?P<id>\d+)/$',views.vote,name='vote'),
     url(r'^post/chat_room/vote_list/(?P<pk>\d+)/$',views.vote_list,name='vote_list'),
-    url(r'^post/chat_room/vote_result/(?P<id>\d+)/$',views.vote_result,name='vote_result'),    
+    
+    url(r'^post/chat_room/vote_result/(?P<id>\d+)/$',views.vote_result,name='vote_result'),
+    url(r'^post/file/new/(?P<pk>\d+)/$',views.file_new,name='file_new'),    
+
+    url(r'^post/chat_room/task/new/(?P<pk>\d+)/$',views.task_new,name='task_new'),
+    #url(r'^post/chat_room/task_list/(?P<pk>\d+)/$',views.task_list,name='task_list'),
+
     url(r'^post_list/$', views.post_list, name='post_list'),
     url(r'^sign_up/$', views.signup, name='sign_up'),
     url(r'^sign_in/$', views.signin, name='sign_in'),
