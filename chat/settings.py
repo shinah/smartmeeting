@@ -134,3 +134,5 @@ CHANNEL_LAYERS = {
         "ROUTING": "chat.routing.routing",
     },
 }
+>>>>>>> bc8a96b367861b82caf272b60be95a4b3ff31999:chat/settings.py
+>>>>>>> dd6624655056adfd3e8c1f4dea21a602d33a2d84:chat/settings.py
