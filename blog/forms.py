@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 #from django.forms import formset_factory
-from .models import Post,Group,Comment,Vote,doVote
+from .models import Post,Group,Comment,Vote,Document
 from django.contrib.auth.models import User
 
 class GroupForm(forms.ModelForm):
@@ -22,10 +22,11 @@ class VoteForm(forms.ModelForm):
     class Meta:
         model = Vote
         fields = ('vote_title','vote_text','vote_num',)
-class doVoteForm(forms.ModelForm):
+
+class DocumentForm(forms.ModelForm):
     class Meta:
-        model = Vote
-        fields=()
+        model = Document
+        fields = ('docu_title','docfile',)
 
 		
 class UserForm(forms.ModelForm):

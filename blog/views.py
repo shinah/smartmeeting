@@ -6,11 +6,10 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post, Group, Comment, Vote, doVote
+from .models import Post, Group, Comment, Vote, Document
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm, doVoteForm
-from django.utils import timezone
+from .forms import PostForm, UserForm, LoginForm, GroupForm, CommentForm , VoteForm, DocumentForm
 
 from .group import *
 
@@ -163,6 +162,20 @@ def vote(request,pk,id):
         form = doVoteForm()
 
     return render(request,'blog/vote.html',{'post':post,'vote':vote,'form':form})
+
+def file_new(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    if request.method == "POST":
+        form = DocumentForm(request.POST,request.FILES)
+        if form.is_valid():
+            newdoc = form.save(commit=False)
+            newdoc.post = post
+            newdoc.user = request.user
+            newdoc.save()
+            return redirect('dic:post_detail',pk=post.pk)
+    else:
+        form = DocumentForm()
+    return render(request,'blog/file_new.html',{'post':post,'form':form})
 
 
 def signup(request):

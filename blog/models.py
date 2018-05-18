@@ -55,9 +55,8 @@ class Vote(models.Model):
   def __str__(self):
     return self.vote_title
 
-class doVote(models.Model):
-  vote = models.ForeignKey(Vote,related_name='doVote')
-  num = models.IntegerField(default=0)
-  agree = models.IntegerField(default=0)
-  disagree = models.IntegerField(default=0)
-  nothing = models.IntegerField(default=0)
+class Document(models.Model):
+  post = models.ForeignKey(Post,related_name='files',null=True)
+  user = models.ForeignKey('auth.User',related_name='doucu_user')
+  docu_title = models.CharField(max_length=200)
+  docfile = models.FileField()
