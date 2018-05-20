@@ -1,0 +1,30 @@
+{% extends 'blog/sub.html' %}
+{% load staticfiles%}
+{% block content %}
+
+
+<head>
+		<link rel="stylesheet" href="{% static 'css/task_list.css' %}">
+</head>
+<body>
+	<div class="info">
+		<h1>"{{post.title}}" 업무분담표</h1>
+		<p>**deadline이 가까운 것부터 표시됩니다.</p>
+	</div>
+	{%for user in users%}
+		<h2>{{user.username}}</h2>
+		<div class="task_list">
+			{% for task in tasks%}
+				{% if task.thisUser == user.username %}
+				<div id="task">
+					<h4>{{ task.toDo }}</h4>
+					<p>deadline: {{task.deadline}}</p>
+				</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	{% endfor %}
+
+	{%endblock%}
+</body>
+

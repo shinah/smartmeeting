@@ -13,12 +13,14 @@
 	    	<input type="text" size='60' name="group_name" requierd>
 	    	<br>
 	    	<p>초대 링크  <button onclick="myFunction()" class="btn">Copy</button></p>
-	    	<input type="text" size = '60' name="group_link" value="http://onmds.cafe24.com/group/{{a}}/group_invitation/" id="myLink" readonly>
+	    	<input type="text" size = '60' name="group_link" value="http://127.0.0.1:8000/group/{{a}}/group_invitation/" id="myLink" readonly>
 	    	<br>
 	        <button type="submit" class="fButton">그룹 생성하기</button>
 	    </form>
     {% endif %}
-<!--로컬일때 그룹 주소: http://smartmeeting.pythonanywhere.com/group/{{a}}/group_invitation/-->
+<!--파이썬 애니워에일때 그룹 주소: http://smartmeeting.pythonanywhere.com/group/{{a}}/group_invitation/
+    서버 배포시 : http://onmds.cafe24.com/group/{{a}}/group_invitation/
+    로컬:-->
 </div>
 <script>
 	$(".post-form > p > input").attr("class","fInput");

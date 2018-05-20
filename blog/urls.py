@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^post/file/new/(?P<pk>\d+)/$',views.file_new,name='file_new'),    
 
     url(r'^post/chat_room/task/new/(?P<pk>\d+)/$',views.task_new,name='task_new'),
-    #url(r'^post/chat_room/task_list/(?P<pk>\d+)/$',views.task_list,name='task_list'),
+    url(r'^post/chat_room/task_list/(?P<pk>\d+)/$',views.task_list,name='task_list'),
 
     url(r'^post_list/$', views.post_list, name='post_list'),
     url(r'^sign_up/$', views.signup, name='sign_up'),

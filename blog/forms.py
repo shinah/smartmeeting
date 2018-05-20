@@ -14,11 +14,6 @@ class PostForm(forms.ModelForm):
 		model = Post
 		fields = ('title', 'text',)
 
-#class CommentForm(forms.ModelForm):
-#    class Meta:
-#        model = Comment
-#        fields = ('text',)
-
 class VoteForm(forms.ModelForm):
     class Meta:
         model = Vote

@@ -27,9 +27,9 @@ def group_make(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             group = form.save(commit=False)
-            #group.url = group.group_link[28:40]
-            #group.url = group.group_link[45:57]#변경부분
-            group.url = group.group_link[30:42]
+            group.url = group.group_link[28:40]
+            #group.url = group.group_link[45:57]#파이썬애니웨어
+            #group.url = group.group_link[30:42]#서버배포
             group.published_date = timezone.now()
             group.save()
             user = get_object_or_404(User,username=request.user)
@@ -191,11 +191,19 @@ def task_new(request,pk):
             task.post = post
             task.user = request.user
             task.save()
-            return redirect('/')
-            #return redirect('dic:task_list',pk=post.pk)
+            #return redirect('/')
+            return redirect('dic:task_list', pk=post.pk)
     else:
         form = TaskForm()
     return render(request,'blog/task_new.html',{'post':post,'form':form, 'users':users})
+
+def task_list(request, pk):
+    post = get_object_or_404(Post,pk=pk)
+    group = post.group
+    users = group.user.all()
+    tasks = Task.objects.filter(post = post).order_by('deadline')
+    return render(request, 'blog/task_list.html', {'post': post, 'users':users, 'tasks':tasks})
+
 
 def signup(request):
     if request.method == "POST":
