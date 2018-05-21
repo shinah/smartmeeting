@@ -1,4 +1,5 @@
 {% extends 'blog/sub.html' %}
+{% load staticfiles %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/vote.css'  %}">
 {%if request.user not in vote.user.all %}

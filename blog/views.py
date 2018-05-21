@@ -9,7 +9,7 @@ from django.template import RequestContext
 from .models import Post, Group, Vote, Document, Task, Chat
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
-from .forms import PostForm, UserForm, LoginForm, GroupForm, VoteForm, DocumentForm, TaskForm
+from .forms import PostForm, UserForm, LoginForm, GroupForm, VoteForm,doVoteForm, DocumentForm, TaskForm
 from django.utils import timezone
 
 from .group import *
