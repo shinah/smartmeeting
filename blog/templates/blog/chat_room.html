@@ -1,5 +1,4 @@
 {% extends 'blog/base_chat.html' %}
-
 {% block content %}
 
 <div class="select">
@@ -12,7 +11,7 @@
 
     <div class="container">
         <div id="chat-body" class="panel panel-default">
-            <div class="panel-heading">Chat Box</div>
+            <div class="panel-heading">"{{post.title}}"에 관한 채팅방 입니다.</div>
             <div id="msg-list-div" class="panel-body">
                 <ul id="msg-list" class="list-group">
                     {% for obj in chat %}
