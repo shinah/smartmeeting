@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'channels',
     'blog',
+    #chat
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -128,10 +129,5 @@ STATIC_ROOT = os.path.join(BASE_DIR,'smartmeeting', 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_UEL = '/media/'
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgiref.inmemory.ChannelLayer",
-        "ROUTING": "chat.routing.routing",
-    },
-}
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

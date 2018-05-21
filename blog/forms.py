@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 #from django.forms import formset_factory
-from .models import Post,Group,Vote,Document,Task
+from .models import Post,Group,Vote,Document,Task,Chat
 from django.contrib.auth.models import User
 
 class GroupForm(forms.ModelForm):

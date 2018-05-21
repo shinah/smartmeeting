@@ -1,0 +1,44 @@
+{% extends 'blog/base_chat.html' %}
+
+{% block content %}
+
+<div class="select">
+        <p><a href="{% url 'dic:vote_new' pk=post.pk %}">투표 생성</a></p>
+        <p><a href="{% url 'dic:task_new' pk=post.pk %}">업무 분담</a></p>
+        <p><a href="{%url 'dic:file_new' pk=post.pk %}">문서 공유</a></p>
+        <p></p>
+        <p><a href="{%url 'dic:vote_list' pk=post.pk %}">투표 목록</a></p>
+    </div>
+
+    <div class="container">
+        <div id="chat-body" class="panel panel-default">
+            <div class="panel-heading">Chat Box</div>
+            <div id="msg-list-div" class="panel-body">
+                <ul id="msg-list" class="list-group">
+                    {% for obj in chat %}
+                        {% if obj.user == request.user %}
+                            <li class="text-right list-group-item">{{ obj.message }}</li>
+                        {% else %}
+                            <li class="text-left list-group-item">{{ obj.message }}</li>
+                        {% endif %}
+                    {% empty %}
+                        <li class="text-right list-group-item">No messages yet!</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <form id="chat-form" method="post" action="{% url 'dic:posting' pk=post.pk %}" data-spy="affix" data-offset-bottom="10">
+            {% csrf_token %}
+            <div id="chat-bottom" class="input-group">
+                <input type="text" id="chat-msg" name="chat-msg" class="form-control"/>
+                <span class="input-group-btn">
+                <input class="btn btn-default" id="send" type="submit" value="Send"/>
+            </span>
+            </div>
+        </form>
+    </div>
+
+    {% endblock %}
+
+

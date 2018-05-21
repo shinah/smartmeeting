@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 #모델 및 폼
-from .models import Post, Group, Vote, Document, Task
+from .models import Post, Group, Vote, Document, Task, Chat
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import login, authenticate
 from .forms import PostForm, UserForm, LoginForm, GroupForm, VoteForm, DocumentForm, TaskForm
@@ -62,6 +62,7 @@ def group_invitation(request, url):
 
 def post_new(request,url):
     group = get_object_or_404(Group, url = url)
+
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
@@ -238,6 +239,30 @@ def signin(request):
         isuser = 1
         return render(request, 'blog/sign_in.html', {'form': form, 'isuser':isuser})
 
-def chat(request,pk):
+def chat_room(request,pk):
     post = get_object_or_404(Post,pk=pk)
-    return render(request, 'blog/chat.html',{'post':post})
+    chats = Chat.objects.filter(post=post)
+    ctx = {
+        'chat': chats,
+        'post': post,
+    }
+    return render(request, 'blog/chat_room.html', ctx)
+    
+def posting(request, pk):
+    post = get_object_or_404(Post,pk=pk)
+    if request.method == "POST":
+        msg = request.POST.get('msgbox', None)
+        print('Our value = ', msg)
+        chat_message = Chat(user=request.user, message=msg, post=post)
+        if msg != '':
+            chat_message.save()
+        return JsonResponse({'msg': msg, 'user': chat_message.user.username})
+    else:
+        return HttpResponse('Request must be POST.')
+
+
+def messages(request):
+    post = get_object_or_404(Post,pk=pk)
+    c = get_object_or_404(Chat, post=post)
+    chat = c.objects.all()
+    return render(request, 'blog/messages.html', {'chat': chat})

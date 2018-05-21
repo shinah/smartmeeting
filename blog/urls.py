@@ -29,5 +29,7 @@ urlpatterns = [
     url('^sign_out/$', auth_views.logout, {'next_page' : '/'}),
     
 
-    url(r'^chat/(?P<pk>\d+)/$', views.chat, name='chat'),
+    url(r'^post/chat_room/(?P<pk>\d+)/$', views.chat_room, name='chat_room'),
+    url(r'post/chat_room/(?P<pk>\d+)/posting/$', views.posting, name='posting'),
+    url(r'^post/chat_room/(?P<pk>\d+)/messages/$', views.messages, name='messages'),
 ]

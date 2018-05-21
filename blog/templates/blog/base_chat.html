@@ -1,0 +1,36 @@
+{% load staticfiles %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    
+    {% block extra_css %}{% endblock %}
+    {% block extra_js %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+{% block content %}
+    <header class="body-header">
+        <div class="body-header__title">
+            <h1 class="text-center">Simple chat</h1>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <p class="lead text-center">Login before using chat!</p>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+<script src="{% static 'js/jquery-1.12.3.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

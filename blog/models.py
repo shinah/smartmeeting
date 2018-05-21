@@ -58,3 +58,12 @@ class Task(models.Model):
   thisUser = models.TextField(null=True)
   toDo = models.TextField(null = False)
   deadline = models.TextField()
+
+class Chat(models.Model):
+  post = models.ForeignKey(Post)
+  created = models.DateTimeField(auto_now_add=True)
+  message = models.CharField(max_length=255)
+  user = models.ForeignKey(User)
+
+  def __str__(self):
+    return self.message
