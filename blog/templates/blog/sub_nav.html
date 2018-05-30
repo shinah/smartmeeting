@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<body>
+  <div class='sub_nav'>
+      {% if not user.is_authenticated%}
+          <ul>
+            <li><a href="/sign_in" >Log in</a></li>
+          </ul>
+      {% else %}
+          <ul>
+            <li><a href="/" >SMART MEETING</a></li>
+            <li><a href="/group_make"><span style="color:#db77ec">MAKE A GROUP !</span></a></li>
+            <li><a href="/group_list">MY GROUPS</a></li>
+            <li style="float:right"><a class="sign_out" href="/sign_out">SIGN OUT</a></li>
+            <li style="float:right" class="userInfo">{{user.username}}  님, 즐거운 회의 하세요!</a></li>
+          </ul> 
+      {%endif%}
+
+  </div>
+</body>

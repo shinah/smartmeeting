@@ -3,6 +3,32 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/vote.css'  %}">
 {%if request.user not in vote.user.all %}
+
+<div class='sub_nav'>
+    <ul>
+        <li><a href="{% url 'dic:group' url=post.group.url %}">{{post.group.group_name}}</a></li>
+        <li class="breaker"> > </li>
+        <li><a href="{% url 'dic:post_detail' pk=post.pk %}">{{post.title}}</a></li>
+        <li class="breaker"> > </li>
+        <li class="dropdown">
+            <a href="{% url 'dic:chat_room' pk=post.pk %}" class="dropbtn">Chat</a>
+            <div class="dropdown-content">
+                <a href="{% url 'dic:task_list' pk=post.pk %}">업무 분담표</a>
+                <a href="<a href="">공유 문서함</a>
+            </div>
+        </li>
+        <li class="breaker"> : </li>
+            <li><a href="{% url 'dic:vote_new' pk=post.pk %}">투표 생성</a></li>
+            <li class="breaker"> | </li>
+            <li><a href="{%url 'dic:vote_list' pk=post.pk %}">투표 목록</a></li>
+            <li class="breaker"> | </li>
+            <li><a href="{% url 'dic:task_new' pk=post.pk %}">업무 분담</a></li>
+            <li class="breaker"> | </li>
+            <li><a href="{%url 'dic:file_new' pk=post.pk %}">문서 공유</a></li>
+    </ul>
+</div>
+
+
 <div class="vote">
 	<h3>투표 제목:{{vote.vote_title}}</h3>
 	<p>{{vote.vote_text}}</p>

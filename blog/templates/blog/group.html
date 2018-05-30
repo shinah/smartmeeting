@@ -2,30 +2,40 @@
 {% load staticfiles%}
 {% block content %}
  <link rel="stylesheet" href="{% static 'css/group.css'  %}">
- 
-<div class = "post_list">
-	<h1 align="center">토의주제목록</h1>
-	<a href="{% url 'dic:post_new' url=group.url %}" >--토의주제 작성하기☞</a>
-
-	<div class="result-container">
-
-	    {% for post in group.posts.all %}
-	    <ul class=container>
-	        <li><a href="{% url 'dic:post_detail' pk=post.pk %}" >{{ post.title }}</a></li>
-	        <!--<p>{{ post.text|linebreaksbr }}</p>-->
-	        <p>published: {{ post.published_date }}</p>
-	    </ul>
-	    {% endfor %}
-	</div>
+<div class='sub_nav'>
+    <ul>
+    	<li><a href="{% url 'dic:group' url=group.url %}">{{group.group_name}}</a></li>
+	</ul>
 </div>
+
+
 
 <div class = "group_user">
-	<h1 align="center">{{group_name}}: 그룹원 명단</h1>
+	<h2 align="center"><span style="color:#86119a">'{{group.group_name}}'</span> 의 그룹입니다.</h2>
 	{%for name in group.user.all%}
-	<p>
-		> {{name.username}}
-	</p>
+	<div>
+		<img src="../../../static/image/user.png" height = 7% width = 7%></img>
+		<p>{{name.username}}</p>
+	</div>
 	{% endfor %}
 </div>
+
+
+<div class = "post_list">
+	<h1 align="center">토의 주제 List</h1>
+
+	<a  href="{% url 'dic:post_new' url=group.url %}" ><button>토의 주제 작성하기☞</button></a>
+	    {% for post in group.posts.all %}
+	    <ul class=container>
+	        <li>
+	        	<a href="{% url 'dic:post_detail' pk=post.pk %}" >
+	        		<h3 class="title">{{ post.title }}</h3>
+	        		<h4 class="sub">{{ post.text }}</h4>
+	        	</a>
+	        </li>
+	    </ul>
+	    {% endfor %}
+</div>
+
 
 {% endblock %}

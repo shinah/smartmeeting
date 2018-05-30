@@ -1,0 +1,77 @@
+
+.sub_nav>ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ebeaeb;
+}
+
+.sub_nav li {
+    float: left;
+}
+
+.sub_nav li a , .dropbtn {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.sub_nav li a:hover , .dropdown:hover .dropbtn {
+    background-color: #dbc8db;
+}
+
+
+.sub_nav li.dropdown {
+    display: inline-block;
+}
+
+li.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+li.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+li.dropdown-content a:hover {background-color: #f1f1f1}
+
+li.dropdown:hover li.dropdown-content {
+    display: block;
+}
+
+.breaker{
+    color: #9c27b0;
+    font-weight: bolder;
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+}
+/*
+.nav li a:hover:not(.sign_out){
+    background-color: #dbc8db;
+}
+
+.sign_out{
+     background-color: #4CAF50;
+}
+
+.info{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}*/

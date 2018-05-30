@@ -1,25 +1,37 @@
-{% extends 'blog/sub.html' %}
+
 {% load staticfiles%}
 {% block content %}
+<head>
+	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+</head>
+
+<body>
 <div class="container_in">
-	<img src="../../../static/image/blue3.jpeg" width="1700" height="600">
+	<img src="../../../static/image/back.jpg" height = 700 width = 1520 alt="">
 </div>
-<div class="title_1"><img src="{%static 'image/smart.png'%}" width="600" height="300"/></div>
+<!--<div class="title_1"><img src="{%static 'image/smart.png'%}" width="600" height="300"/></div>-->
 <div class="wrap_description">
-	<div class="description1 bold">
-		<p>그룹별 온라인 회의를 더 쉽게 만들어줍니다.</p>
-		<p>먼저 그룹을 만들어보세요!.</p>
-	</div>
 	<div class="description2 bolder">
 		{% if not user.is_authenticated %}
-		    <p>Welcome !</p>
-			<div class="inline-block margin-right"><a href="/sign_up">SIGN UP</a></div>
-			<div class="inline-block "><a href="/sign_in">SIGN IN</a></div>
+			<div id="mySidenav" class="sidenav">
+  				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  				<a>Welcome !</a>
+  				<a href="/sign_up">SIGN UP</a>
+  				<a href="/sign_in">SIGN IN</a>
+			</div>
+			<!-- Use any element to open the sidenav -->
+			<button><span onclick="openNav()">get started</span></button>
 		{% else %}
-			<p>Welcome, <span style="color:yellow">{{ user.username }} !</span></p>
-			<div class="inline-block margin-right"><a href='/group_make'>MAKE GROUP</a></div>
-			<div class="inline-block  margin-right"><a href="/sign_out">SIGN OUT</a></div>
-			<div class="inline-block "><a href="/group_list">MY GROUP LIST</a></div>
+			<div id="mySidenav" class="sidenav">
+  				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  				<h3>Welcome, <span style="color:yellow">{{ user.username }}</span> !</h3>
+  				<a href='/group_make'>MAKE GROUP</a>
+  				<a href="/group_list">MY GROUP LIST</a>
+  				<a href="/sign_out">SIGN OUT</a>
+			</div>
+			<!-- Use any element to open the sidenav -->
+			<button onclick="openNav()">get started</button>
 		{% endif %}
 	</div>
 </div>	
@@ -33,8 +45,17 @@ $(function() {
 });
 $('body').attr("class","");
 $('body').attr('class','index');
+/* Set the width of the side navigation to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
 
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
 </script>
+</body>
 {% endblock %} 
 
 		

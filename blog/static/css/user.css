@@ -97,11 +97,56 @@ label{
 	display: none;
 }
 
-button{
+/*button{
 	height: 45px;
 	font-size: 15px;
 	padding: 8px;
 	border: none;
 	background-color: #eee;
-	/*margin-bottom: 10px;*/
+	margin-bottom: 10px;
+}*/
+
+button,
+button::after {
+  -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+button {
+    background: #fff;
+    border: 2px solid #9C27B0;
+    border-radius: 5px;
+    color: black;
+    display: block;
+    font-weight: bold;
+    /*margin-left: 10px;*/
+    margin: 20px auto;
+    padding: 10px 30px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+button::before,
+button::after {
+  background: #9C27B0;
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+
+button:hover {
+  color: #fff;
+  background: #9C27B0;
+}
+
+button::after {
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 0;
+}
+
+button:hover:after {
+  width: 100%;
 }
