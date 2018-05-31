@@ -22,7 +22,7 @@ class VoteForm(forms.ModelForm):
 class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ('docu_title','docfile',)
+        fields = ('docu_title','importance',)
 class doVoteForm(forms.ModelForm):
     class Meta:
         model = Vote

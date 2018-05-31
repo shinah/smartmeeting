@@ -5,14 +5,22 @@
 	    <form method="POST" class="post-form" enctype="multipart/form-data">
 	    	{% csrf_token %}
 	    	<input type="text" size='40' name="docu_title" placeholder="제목을 입력해주세요" requierd>
-	    	<input type="file" name="docfile">	    	
+	    	<br><br>
+	    	<h4>중요도 선택</h4>
+	    	<select name="importance">
+	    			<option value='high'>상</option>
+	    			<option value='middle'>중</option>
+	    			<option value='low'>하</option>
+	    	</select>
+	    	<br><br>
+	    	<input type="file" name="docfile">
+	    	<br><br>    	
 	        <button type="submit" class="save btn btn-default">Save</button>
 	    </form>
 
 </div>
 <script>
 	$(".post-form > p > input").attr("class","fInput");
-	$(".post-form > button").attr("class","fButton")
 
 	// $( ".wrapInput" ).prepend( "<div class=\"input-label\">TITLE</div>" );
 </script>

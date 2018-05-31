@@ -1,0 +1,14 @@
+.file_link a{
+	text-decoration: none;
+	font-size: 30px;
+	color: black;
+}
+
+.file_link_detail{
+	text-align: center;
+}
+
+.file_link_detail a{
+	text-decoration: none;
+	font-size: 18px;
+}

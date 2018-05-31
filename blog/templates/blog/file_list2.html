@@ -1,0 +1,37 @@
+{% extends 'blog/sub.html' %}
+{% load staticfiles%}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/file.css'  %}">
+<div>
+	<a href="{% url 'dic:post_detail' pk=post.pk %}">돌아가기</a>
+	<p></p><p></p>
+	<div class="file_link">
+	<a href="{% url 'dic:file_list2' pk=post.pk %}">중요도순 보기</a>
+	<p></p>
+	<a href="{% url 'dic:file_list3' pk=post.pk %}">시간순 보기</a>
+	</div>
+	<div class="file_link_detail">
+	<h3>매우 중요 </h3>
+    {% for d in documents %}
+	    {% if d.importance == "high" %}
+			<a href="{{d.docfile.url}}" download >{{d.docu_title}} : {{d.docfile.name}}</a>
+	        <p></p>
+	    {% endif %}	     	
+    {% endfor %}
+	<h3>중요 </h3>
+    {% for d in documents %}
+	    {% if d.importance == "middle" %}
+			<a href="{{d.docfile.url}}" download >{{d.docu_title}} : {{d.docfile.name}}</a>
+	        <p></p>
+	    {% endif %}	     	
+    {% endfor %}  
+	<h3>덜 중요 </h3>
+    {% for d in documents %}
+	    {% if d.importance == "low" %}
+			<a href="{{d.docfile.url}}" download >{{d.docu_title}} : {{d.docfile.name}}</a>
+	        <p></p>
+	    {% endif %}	     	
+    {% endfor %} 
+    </div> 
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'blog/sub.html' %}
+{% load staticfiles%}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/file.css'  %}">
+
+<div class="file_link">
+	<a href="{% url 'dic:file_list2' pk=post.pk %}">중요도순 보기</a>
+	<p></p>
+	<a href="{% url 'dic:file_list3' pk=post.pk %}">시간순 보기</a>
+</div>
+
+{% endblock %}

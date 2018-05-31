@@ -125,7 +125,6 @@ def vote(request,pk,id):
         dovote.save()
         user = get_object_or_404(User,username=request.user)
         dovote.user.add(user)
-        #return redirect('dic:chat_room',pk = post.pk)
         return redirect('dic:vote_list',pk=post.pk)
     elif 'value2' in request.POST:
         form = doVoteForm(request.POST)
@@ -172,13 +171,29 @@ def file_new(request,pk):
         form = DocumentForm(request.POST,request.FILES)
         if form.is_valid():
             newdoc = form.save(commit=False)
+            newdoc.docfile=request.FILES['docfile']
             newdoc.post = post
             newdoc.user = request.user
+            newdoc.published_date=timezone.now()
             newdoc.save()
-            return redirect('dic:post_detail',pk=post.pk)
+            return redirect('dic:file_list',pk=post.pk)
     else:
         form = DocumentForm()
     return render(request,'blog/file_new.html',{'post':post,'form':form})
+
+def file_list(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    return render(request,'blog/file_list.html',{'post':post})
+
+def file_list2(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    documents = Document.objects.all()
+    return render(request,'blog/file_list2.html',{'post':post,'documents':documents})
+
+def file_list3(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    documents = Document.objects.all().order_by('-published_date')
+    return render(request,'blog/file_list3.html',{'post':post,'documents':documents})
 
 def task_new(request,pk):
     post = get_object_or_404(Post,pk=pk)

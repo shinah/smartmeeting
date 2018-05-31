@@ -51,6 +51,8 @@ class Document(models.Model):
   user = models.ForeignKey('auth.User',related_name='doucu_user')
   docu_title = models.CharField(max_length=200)
   docfile = models.FileField()
+  importance = models.CharField(max_length=100,null=True)
+  published_date = models.DateTimeField(blank=True,null=True)
 
 class Task(models.Model):
   post = models.ForeignKey(Post,related_name='takes',null=True)

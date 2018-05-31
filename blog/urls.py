@@ -3,6 +3,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 app_name='dic'
 
 urlpatterns = [
@@ -13,12 +15,16 @@ urlpatterns = [
 	url(r'^group_list$',views.group_list,name='group_list'),
     url(r'^post/(?P<url>\w+)/new/$',views.post_new, name='post_new'),
     url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
+
     url(r'^post/chat_room/vote/new/(?P<pk>\d+)/$',views.vote_new,name='vote_new'),
     url(r'^post/chat_room/vote/(?P<pk>\d+)/(?P<id>\d+)/$',views.vote,name='vote'),
     url(r'^post/chat_room/vote_list/(?P<pk>\d+)/$',views.vote_list,name='vote_list'),
-    
     url(r'^post/chat_room/vote_result/(?P<id>\d+)/$',views.vote_result,name='vote_result'),
-    url(r'^post/file/new/(?P<pk>\d+)/$',views.file_new,name='file_new'),    
+    
+    url(r'^post/file/new/(?P<pk>\d+)/$',views.file_new,name='file_new'),  
+    url(r'^post/file/list/(?P<pk>\d+)/$',views.file_list,name='file_list'),  
+    url(r'^post/file/list2/(?P<pk>\d+)/$',views.file_list2,name='file_list2'),
+    url(r'^post/file/list3/(?P<pk>\d+)/$',views.file_list3,name='file_list3'),
 
     url(r'^post/chat_room/task/new/(?P<pk>\d+)/$',views.task_new,name='task_new'),
     url(r'^post/chat_room/task_list/(?P<pk>\d+)/$',views.task_list,name='task_list'),
@@ -32,4 +38,4 @@ urlpatterns = [
     url(r'^post/chat_room/(?P<pk>\d+)/$', views.chat_room, name='chat_room'),
     url(r'post/chat_room/(?P<pk>\d+)/posting/$', views.posting, name='posting'),
     url(r'^post/chat_room/(?P<pk>\d+)/messages/$', views.messages, name='messages'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
