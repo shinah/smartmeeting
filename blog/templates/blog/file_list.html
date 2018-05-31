@@ -2,6 +2,21 @@
 {% load staticfiles%}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/file.css'  %}">
+<div class='sub_nav'>
+    <ul>
+        <li><a href="{% url 'dic:group' url=post.group.url %}">{{post.group.group_name}}</a></li>
+        <li class="breaker"> > </li>
+        <li><a href="{% url 'dic:post_detail' pk=post.pk %}">{{post.title}}</a></li>
+        <li class="breaker"> > </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">공유 문서함</a>
+            <div class="dropdown-content">
+                <a href="{% url 'dic:chat_room' pk=post.pk %}">Chat</a>
+                <a href="{% url 'dic:task_list' pk=post.pk%}">업무 분담표</a>
+            </div>
+        </li>
+    </ul>
+</div>
 
 <div class="file_link">
 	<a href="{% url 'dic:file_list2' pk=post.pk %}">중요도순 보기</a>
