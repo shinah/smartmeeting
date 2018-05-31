@@ -1,7 +1,7 @@
 
 .post_list{
 	display: inline-block;
-	margin-left: 45px;
+	margin-left: 180px;
 	margin-top: 20px;
 }
 
@@ -17,12 +17,56 @@
 }*/
 
 ul.container{
+
+
 	list-style: none;
     padding: 0px;
   
-    max-width: 400px;
-    width: 100%;
+    max-width: 750px;
+    width: 120%;
 }
+ul.container li:hover{
+    background: #e1f0fa;
+}
+
+ul.container li:hover .title{
+    opacity: 1;
+    color:#2676ac;
+    animation: moveFromTop 300ms ease-in-out;
+}
+ul.container li:hover .sub{
+    opacity: 1;
+    animation: moveFromBottom 300ms ease-in-out;
+}
+
+@keyframes moveFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(200%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+@keyframes moveFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-200%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+
+
+
+
+
+
 .container > li{
 	padding: 5px 0px 5px 5px;
     margin-bottom: 5px;
@@ -56,11 +100,17 @@ ul.container{
 .group_user {
 	display: inline-block;
 	position: absolute;
-	left: 900px;
+	left: 700px;
 	margin-top: 20px;
+	background: #d6d2d28c;
+    padding: 15px;
+    border-radius: 20px;
 }
-.group_user p{
-	font-size: 20px;
+
+.group_user div > p{
+	font-size: 15px;
+	display: inline-block;
+	margin-left: 20px;
 }
 .now_vote_list {
 	display: inline-block;

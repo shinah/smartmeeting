@@ -61,7 +61,8 @@
 }
 
 .post-form > p {
-	margin: 10px 0px 0px 0px;
+	margin: 20px 10px 10px 0px;
+	display: inline-block;
 }
 
 .post-form > p > label{
@@ -72,7 +73,7 @@
 	border: none;
 	background-color: #c9c8ce;
 	color: white;
-	width: 300px;
+	width: 500px;
 	margin: 10px 0px 0px 0px;
 	padding: 10px 10px;
 	font-size: 20px;

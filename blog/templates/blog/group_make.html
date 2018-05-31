@@ -9,12 +9,12 @@
 	    <form method="POST" class="post-form" >
 	    	{% csrf_token %}
 	    	
-	    	<p>그룹명</p>
+	    	<p>그룹명</p><br>
 	    	<input type="text" size='60' name="group_name" requierd>
 	    	<br>
-	    	<p>초대 링크  <button onclick="myFunction()" class="btn">Copy</button></p>
-	    	<input type="text" size = '60' name="group_link" value="http://127.0.0.1:8000/group/{{a}}/group_invitation/" id="myLink" readonly>
+	    	<p>초대 링크        </p><p><button onclick="myFunction()" class="btn">Copy</button></p>
 	    	<br>
+	    	<input type="text" size = '60' name="group_link" value="http://127.0.0.1:8000/group/{{a}}/group_invitation/" id="myLink" readonly><br>
 	        <button type="submit" class="fButton">그룹 생성하기</button>
 	    </form>
     {% endif %}

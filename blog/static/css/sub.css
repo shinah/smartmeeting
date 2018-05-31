@@ -31,3 +31,11 @@
 .sign_out{
      background-color: #4CAF50;
 }
+
+.userInfo{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}

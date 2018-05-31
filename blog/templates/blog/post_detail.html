@@ -1,6 +1,14 @@
 {% extends 'blog/sub.html' %}
 
 {% block content %}
+<div class='sub_nav'>
+    <ul>
+        <li><a href="{% url 'dic:group' url=post.group.url %}">{{post.group.group_name}}</a></li>
+        <li class="breaker"> > </li>
+        <li><a href="{% url 'dic:post_detail' pk=post.pk %}">{{post.title}}</a></li>
+    </ul>
+</div>
+
 <h3> 주제: {{ post.title }}</h3>
 <p> {{ post.text|linebreaksbr }} </p> <!--주제 상세설명-->
 <div class="div_container">
