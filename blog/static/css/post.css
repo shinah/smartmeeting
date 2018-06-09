@@ -6,13 +6,13 @@
 }
 .post_edit{
 	margin: 20px 0px 0px 0px;
-	background: url("../image/bg-result.png") no-repeat;
+	background: url("../image/post_back.png") no-repeat;
 	background-size: cover;
 	padding: 50px 0px;
 }
 .post_edit > h1:first-child{
 	margin-top: 50px;
-	color: #179a90;
+	color: #777;
 }
 
 .post_edit> h2 > a{
@@ -71,7 +71,7 @@
 
 .fButton{
 	border: none;
-	background-color: #c9c8ce;
+	background-color: #dbc8db;
 	color: white;
 	width: 500px;
 	margin: 10px 0px 0px 0px;
@@ -83,7 +83,7 @@
 
 .fButton:hover{
 	transition: all 0.5s ease;
-	background-color: #9be5e0;	 
+	background-color: #9C27B0;	 
 
 }
 

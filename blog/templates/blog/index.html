@@ -1,17 +1,27 @@
 
 {% load staticfiles%}
 {% block content %}
+<style>
+@-moz-keyframes ani_fadein { from { opacity: 0; }  to { } }
+@-webkit-keyframes ani_fadein { from { opacity: 0; }  to { } }
+
+.fadein { -webkit-animation: ani_fadein 1.5s;  -moz-animation: ani_fadein 1.5s;}
+</style>
+
 <head>
 	<link rel="stylesheet" href="{% static 'css/index.css' %}">
 
 </head>
-
 <body>
 <div class="container_in">
 	<img src="../../../static/image/back.jpg" height = 700 width = 1520 alt="">
 </div>
 <!--<div class="title_1"><img src="{%static 'image/smart.png'%}" width="600" height="300"/></div>-->
 <div class="wrap_description">
+	<div class="fadein">
+		<p>회의 관리가 손쉬워지는 온라인 회의관리 툴, 스마트미팅</p>
+	</div>
+
 	<div class="description2 bolder">
 		{% if not user.is_authenticated %}
 			<div id="mySidenav" class="sidenav">
@@ -39,8 +49,7 @@
 
 <script>
 $(function() {
-	$('.description1>p:first-child').delay(1000).animate({opacity: 1, right:"-20px"},2000);
-	$('.description1>p:nth-child(2)').delay(2000).animate({opacity: 1,right:"-20px"},2000);
+	$('.description1>p').delay(1000).animate({opacity: 1, right:"-20px"},2000);
 	$('.description2').animate({opacity: 1},2000);
 });
 $('body').attr("class","");
