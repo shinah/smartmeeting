@@ -13,7 +13,10 @@
 	<div class="file_link_detail">
 	<h3>최근 것부터 정렬 </h3>
     {% for d in documents %}
-			<a href="{{d.docfile.url}}" download >{{d.docu_title}} : {{d.docfile.name}}</a>
+    		{{d.docfile.url}}
+    		<br>
+    		/media/{{d.docfile.name}}
+			<a href="/media/{{d.docfile.name}}" download >{{d.docu_title}} : {{d.docfile.name}}</a>
 			<br>{{d.published_date}}
 	        <p></p>	     	
     {% endfor %}

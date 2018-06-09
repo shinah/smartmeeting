@@ -1,6 +1,8 @@
+#-*- coding: utf-8 -*-
 import json
 import urllib
 import urllib.request
+import urllib.parse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.template import RequestContext
@@ -171,7 +173,7 @@ def file_new(request,pk):
         form = DocumentForm(request.POST,request.FILES)
         if form.is_valid():
             newdoc = form.save(commit=False)
-            newdoc.docfile=request.FILES['docfile']
+            newdoc.docfile = request.FILES['docfile']
             newdoc.post = post
             newdoc.user = request.user
             newdoc.published_date=timezone.now()
