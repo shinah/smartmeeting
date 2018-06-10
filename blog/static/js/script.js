@@ -4,9 +4,10 @@ $('#chat-form').on('submit', function(event){
     $.ajax({
         url : 'posting/',
         type : 'POST',
-        data : { 'msgbox' : $('#chat-msg').val() },
+        data : { msgbox : $('#chat-msg').val() },
 
         success : function(json){
+            console.log(json);
             $('#chat-msg').val('');
             $('#msg-list').append('<li class="text-right list-group-item">' + json.msg + '</li>');
             var chatlist = document.getElementById('msg-list-div');
@@ -15,10 +16,15 @@ $('#chat-form').on('submit', function(event){
     });
 });
 
+
+
 function getMessages(){
     if (!scrolling) {
         $.get('/messages/', function(messages){
+            console.log(messages);
             $('#msg-list').html(messages);
+            var chatlist = document.getElementById('msg-list-div');
+            chatlist.scrollTop = chatlist.scrollHeight;
         });
     }
     scrolling = false;
@@ -29,9 +35,20 @@ $(function(){
     $('#msg-list-div').on('scroll', function(){
         scrolling = true;
     });
-    refreshTimer = setInterval(getMessages, 500);
+    refreshTimer = setInterval(getMessages, 1000);
 });
 
+$(document).ready(function() {
+     $('#send').attr('disabled','disabled');
+     $('#chat-msg').keyup(function() {
+        if($(this).val() != '') {
+            $('#send').removeAttr('disabled');
+        }
+        else {
+            $('#send').attr('disabled','disabled');
+        }
+     });
+ });
 
 // using jQuery
 function getCookie(name) {
@@ -49,6 +66,7 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
 var csrftoken = getCookie('csrftoken');
 
 function csrfSafeMethod(method) {
@@ -61,17 +79,4 @@ $.ajaxSetup({
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
     }
-});
-
-$(document).ready(function() {
-    $('#send').attr('disabled','disabled');
-    $('#chat-msg').keyup(function() {
-        if($(this).val() != '') {
-            $('#send').removeAttr('disabled');
-        }
-        else {
-            $('#send').attr('disabled','disabled');
-        }
-    });
-
 });

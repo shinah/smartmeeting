@@ -36,6 +36,6 @@ urlpatterns = [
     
 
     url(r'^post/chat_room/(?P<pk>\d+)/$', views.chat_room, name='chat_room'),
-    url(r'post/chat_room/(?P<pk>\d+)/posting/$', views.posting, name='posting'),
-    url(r'^post/chat_room/(?P<pk>\d+)/messages/$', views.messages, name='messages'),
+    url(r'^post/chat_room/(?P<pk>\d+)/posting/$', views.posting, name='posting'),
+    url(r'^messages/$', views.messages, name='messages'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

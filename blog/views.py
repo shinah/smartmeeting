@@ -260,6 +260,7 @@ def chat_room(request,pk):
     post = get_object_or_404(Post,pk=pk)
     chats = Chat.objects.filter(post=post)
     ctx = {
+        'chat_room': 'active',
         'chat': chats,
         'post': post,
     }
@@ -271,6 +272,8 @@ def posting(request, pk):
         msg = request.POST.get('msgbox', None)
         print('Our value = ', msg)
         chat_message = Chat(user=request.user, message=msg, post=post)
+        msg = chat_message.user.username+": "+msg
+        chat_message = Chat(user=request.user, message=msg, post=post)
         if msg != '':
             chat_message.save()
         return JsonResponse({'msg': msg, 'user': chat_message.user.username})
@@ -279,7 +282,5 @@ def posting(request, pk):
 
 
 def messages(request):
-    post = get_object_or_404(Post,pk=pk)
-    c = get_object_or_404(Chat, post=post)
-    chat = c.objects.all()
+    chat = Chat.objects.all()
     return render(request, 'blog/messages.html', {'chat': chat})
