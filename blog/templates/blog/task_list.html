@@ -17,15 +17,14 @@
             <a href="javascript:void(0)" class="dropbtn">업무 분담표</a>
             <div class="dropdown-content">
                 <a href="{% url 'dic:chat_room' pk=post.pk %}">Chat</a>
-                <a href="{% url 'dic:file_list' pk=post.pk%}">공유 문서함</a>
+                <a href="{% url 'dic:file_list2' pk=post.pk%}">공유 문서함</a>
             </div>
         </li>
     </ul>
 </div>
 
-
+<div class="content">
 	<div class="info">
-		<h1>"{{post.title}}" 업무분담표</h1>
 		<p>**deadline이 가까운 것부터 표시됩니다.</p>
 	</div>
 	{%for user in users%}
@@ -41,6 +40,7 @@
 			{% endfor %}
 		</div>
 	{% endfor %}
+</div>
 
 	{%endblock%}
 </body>

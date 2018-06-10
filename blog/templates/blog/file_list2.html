@@ -2,34 +2,50 @@
 {% load staticfiles%}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/file.css'  %}">
+
+<div class='sub_nav'>
+    <ul>
+        <li><a href="{% url 'dic:group' url=post.group.url %}">{{post.group.group_name}}</a></li>
+        <li class="breaker"> > </li>
+        <li><a href="{% url 'dic:post_detail' pk=post.pk %}">{{post.title}}</a></li>
+        <li class="breaker"> > </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">공유 문서함</a>
+            <div class="dropdown-content">
+                <a href="{% url 'dic:chat_room' pk=post.pk %}">Chat</a>
+                <a href="{% url 'dic:task_list' pk=post.pk%}">업무 분담표</a>
+            </div>
+        </li>
+        <li class="breaker"> : </li>
+        <li><a href="" class="fileOrder">중요도순 보기</a></li>
+        <li class="breaker"> | </li>
+        <li><a href="{% url 'dic:file_list3' pk=post.pk %}">시간순 보기</a></li>
+    </ul>
+</div>
+
 <div>
-	<a href="{% url 'dic:post_detail' pk=post.pk %}">돌아가기</a>
 	<p></p><p></p>
-	<div class="file_link">
-	<a href="{% url 'dic:file_list2' pk=post.pk %}">중요도순 보기</a>
-	<p></p>
-	<a href="{% url 'dic:file_list3' pk=post.pk %}">시간순 보기</a>
-	</div>
+
 	<div class="file_link_detail">
-	<h3>매우 중요 </h3>
+	<h3>VERY important</h3>
     {% for d in documents %}
 	    {% if d.importance == "high" %}
-			<a href="{{d.docfile.url}}" download >{{d.docu_title}} : {{d.docfile.name}}</a>
-	        <p></p>
+			<p>{{d.docu_title}} : <a href="{{d.docfile.url}}" download >{{d.docfile.name}}</a></p>
+	        
 	    {% endif %}	     	
     {% endfor %}
-	<h3>중요 </h3>
+	<h3>Important </h3>
     {% for d in documents %}
 	    {% if d.importance == "middle" %}
-			<a href="{{d.docfile.url}}" download >{{d.docu_title}} : {{d.docfile.name}}</a>
-	        <p></p>
+			<p>{{d.docu_title}} : <a href="{{d.docfile.url}}" download >{{d.docfile.name}}</a></p>
+	        
 	    {% endif %}	     	
     {% endfor %}  
-	<h3>덜 중요 </h3>
+	<h3>Normal</h3>
     {% for d in documents %}
 	    {% if d.importance == "low" %}
-			<a href="{{d.docfile.url}}" download >{{d.docu_title}} : {{d.docfile.name}}</a>
-	        <p></p>
+			<p>{{d.docu_title}} : <a href="{{d.docfile.url}}" download >{{d.docfile.name}}</a></p>
+	        
 	    {% endif %}	     	
     {% endfor %} 
     </div> 
