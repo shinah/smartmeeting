@@ -2,23 +2,35 @@
 {% load staticfiles%}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/file.css'  %}">
-<div>
-	<a href="{% url 'dic:post_detail' pk=post.pk %}">돌아가기</a>
-	<p></p><p></p>
-	<div class="file_link">
-	<a href="{% url 'dic:file_list2' pk=post.pk %}">중요도순 보기</a>
-	<p></p>
-	<a href="{% url 'dic:file_list3' pk=post.pk %}">시간순 보기</a>
-	</div>
+<div class='sub_nav'>
+    <ul>
+        <li><a href="{% url 'dic:group' url=post.group.url %}">{{post.group.group_name}}</a></li>
+        <li class="breaker"> > </li>
+        <li><a href="{% url 'dic:post_detail' pk=post.pk %}">{{post.title}}</a></li>
+        <li class="breaker"> > </li>
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">공유 문서함</a>
+            <div class="dropdown-content">
+                <a href="{% url 'dic:chat_room' pk=post.pk %}">Chat</a>
+                <a href="{% url 'dic:task_list' pk=post.pk%}">업무 분담표</a>
+            </div>
+        </li>
+        <li class="breaker"> : </li>
+        <li><a href="{% url 'dic:file_list2' pk=post.pk %}">중요도순 보기</a></li>
+        <li class="breaker"> | </li>
+        <li><a href="" class="fileOrder">시간순 보기</a></li>
+    </ul>
+</div>
+
 	<div class="file_link_detail">
-	<h3>최근 것부터 정렬 </h3>
+	<h3>업로드 시간 최신순으로 정렬됩니다.</h3>
     {% for d in documents %}
-    		{{d.docfile.url}}
+    		<!--{{d.docfile.url}}
     		<br>
-    		/media/{{d.docfile.name}}
-			<a href="/media/{{d.docfile.name}}" download >{{d.docu_title}} : {{d.docfile.name}}</a>
+    		/media/{{d.docfile.name}}-->
+			<p>{{d.docu_title}} : <a href="/media/{{d.docfile.name}}" download >{{d.docfile.name}}</a>
 			<br>{{d.published_date}}
-	        <p></p>	     	
+	        </p>	     	
     {% endfor %}
 	</div>
 </div>

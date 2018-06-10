@@ -1,14 +1,58 @@
-.file_link a{
-	text-decoration: none;
-	font-size: 30px;
-	color: black;
-}
 
-.file_link_detail{
+
+h3{
 	text-align: center;
+	background-color: #ede2f5;
+	margin-top: 10px; 
+	margin-bottom: 10px; 
+	padding-top: 4px; 
+	padding-bottom: 4px; 
+}
+.file_link_detail{
+	color: 	black;
+	margin-top: 30px;
+	margin-left: 20%;
+	margin-right: 30%;
+	margin-bottom: 30px;
 }
 
+.file_link_detail p{
+  margin-left: 20px;
+}
 .file_link_detail a{
-	text-decoration: none;
 	font-size: 18px;
+	font-weight: bold;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.file_link_detail a {
+  transition: .3s;
+  background-position: top left;
+  background-image: url(../image/wave.png);
+  color: #fff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.file_link_detail a:before {
+  position: absolute;
+  content: '';
+  background: #d158ef;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 5px;
+  transition: .3s .1s;
+}
+.file_link_detail a:hover {
+  transition: .6s .1s;
+  background-position: bottom right;
+}
+.file_link_detail a:hover:before {
+  transition: .3s;
+  transform: translateY(-100%) scaleY(0);
+  opacity: 0;
 }

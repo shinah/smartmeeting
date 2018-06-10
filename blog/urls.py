@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^post/chat_room/vote_result/(?P<id>\d+)/$',views.vote_result,name='vote_result'),
     
     url(r'^post/file/new/(?P<pk>\d+)/$',views.file_new,name='file_new'),  
-    url(r'^post/file/list/(?P<pk>\d+)/$',views.file_list,name='file_list'),  
+    #url(r'^post/file/list/(?P<pk>\d+)/$',views.file_list,name='file_list'),  
     url(r'^post/file/list2/(?P<pk>\d+)/$',views.file_list2,name='file_list2'),
     url(r'^post/file/list3/(?P<pk>\d+)/$',views.file_list3,name='file_list3'),
 

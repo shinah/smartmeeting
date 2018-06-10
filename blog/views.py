@@ -178,14 +178,14 @@ def file_new(request,pk):
             newdoc.user = request.user
             newdoc.published_date=timezone.now()
             newdoc.save()
-            return redirect('dic:file_list',pk=post.pk)
+            return redirect('dic:file_list2',pk=post.pk)
     else:
         form = DocumentForm()
     return render(request,'blog/file_new.html',{'post':post,'form':form})
 
-def file_list(request,pk):
+'''def file_list(request,pk):
     post = get_object_or_404(Post,pk=pk)
-    return render(request,'blog/file_list.html',{'post':post})
+    return render(request,'blog/file_list.html',{'post':post})'''
 
 def file_list2(request,pk):
     post = get_object_or_404(Post,pk=pk)
@@ -200,7 +200,7 @@ def file_list3(request,pk):
 def task_new(request,pk):
     post = get_object_or_404(Post,pk=pk)
     group = post.group
-    users = group.user.all() #ㅜㅜ드디어
+    users = group.user.all() 
 
     if request.method=="POST":
         form = TaskForm(request.POST)
