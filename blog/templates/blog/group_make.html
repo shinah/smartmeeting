@@ -12,7 +12,7 @@
 	    	<p>그룹명</p><br>
 	    	<input type="text" size='60' name="group_name" requierd>
 	    	<br>
-	    	<p>초대 링크        </p><p><button onclick="myFunction()" class="btn">Copy</button></p>
+	    	<p>초대 링크        </p><p><button onclick="copyToClipboard('myLink')" class="btn">Copy</button></p>
 	    	<br>
 	    	<input type="text" size = '60' name="group_link" value="http://127.0.0.1:8000/group/{{a}}/group_invitation/" id="myLink" readonly><br>
 	        <button type="submit" class="fButton">그룹 생성하기</button>
@@ -31,18 +31,26 @@
 
 	// $( ".wrapInput" ).prepend( "<div class=\"input-label\">TITLE</div>" );
 
-	function myFunction() {
-	  /* Get the text field */
-	  var copyText = document.getElementById("myLink");
+function copyToClipboard(elementId) {
 
-	  /* Select the text field */
-	  copyText.select();
+  // Create a "hidden" input
+  var aux = document.createElement("input");
 
-	  /* Copy the text inside the text field */
-	  document.execCommand("Copy");
+  // Assign it the value of the specified element
+  aux.setAttribute("value", document.getElementById(elementId).innerHTML);
 
-	  /* Alert the copied text */
-	  alert("Copied the text: " + copyText.value);
-	}
+  // Append it to the body
+  document.body.appendChild(aux);
+
+  // Highlight its content
+  aux.select();
+
+  // Copy the highlighted text
+  document.execCommand("copy");
+
+  // Remove it from the body
+  document.body.removeChild(aux);
+
+}
 </script>
 {% endblock %}

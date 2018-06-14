@@ -29,9 +29,9 @@ def group_make(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             group = form.save(commit=False)
-            group.url = group.group_link[28:40]
+            #group.url = group.group_link[28:40]
             #group.url = group.group_link[45:57]#파이썬애니웨어
-            #group.url = group.group_link[30:42]#서버배포
+            group.url = group.group_link[30:42]#서버배포
             group.published_date = timezone.now()
             group.save()
             user = get_object_or_404(User,username=request.user)
@@ -189,12 +189,12 @@ def file_new(request,pk):
 
 def file_list2(request,pk):
     post = get_object_or_404(Post,pk=pk)
-    documents = Document.objects.all()
+    documents = post.files.all()
     return render(request,'blog/file_list2.html',{'post':post,'documents':documents})
 
 def file_list3(request,pk):
     post = get_object_or_404(Post,pk=pk)
-    documents = Document.objects.all().order_by('-published_date')
+    documents = post.files.all().order_by('-published_date')
     return render(request,'blog/file_list3.html',{'post':post,'documents':documents})
 
 def task_new(request,pk):
