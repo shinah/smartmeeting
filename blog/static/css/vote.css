@@ -21,6 +21,17 @@
 	text-align: center;
 }
 
+.info {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #ede2f5;
+}
+
+
+.info > h1{
+	color: #777;
+}
+
 .vote_list{
 	margin-top:50px;
 }
