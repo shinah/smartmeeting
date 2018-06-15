@@ -1,6 +1,8 @@
 {% extends 'blog/base_chat.html' %}
 {% block content %}
 
+<html>
+</body>
 <div class='sub_nav'>
     <ul>
         <li><a href="{% url 'dic:group' url=post.group.url %}">{{post.group.group_name}}</a></li>
@@ -43,6 +45,10 @@
                     {% empty %}
                         <li class="text-right list-group-item">No messages yet!</li>
                     {% endfor %}
+                    <script>
+                        var chatlist = document.getElementById('msg-list-div');
+                        chatlist.scrollTop = chatlist.scrollHeight
+                    </script>
                 </ul>
             </div>
         </div>
@@ -59,5 +65,7 @@
     </div>
 
     {% endblock %}
+</body>
+</html>
 
 

@@ -13,7 +13,7 @@
         		<h3 class="title">{{ g.group_name }}</h3>
         		<h4 class="sub" id="myLink">{{ g.group_link }}</h4>
         	</a>
-        	<button onclick="myFunction()" class="btn">초대링크 COPY</button>
+        	<button onclick="copyToClipboard('myLink')" class="btn">초대링크 COPY</button>
         </li>
     </ul>
     {% endfor %}
@@ -23,18 +23,27 @@
 
 
 <script>
-function myFunction() {
-	  /* Get the text field */
-	  var copyText = document.getElementById("myLink");
+function copyToClipboard(elementId) {
 
-	  /* Select the text field */
-	  copyText.select();
+  // Create a "hidden" input
+  var aux = document.createElement("input");
 
-	  /* Copy the text inside the text field */
-	  document.execCommand("Copy");
+  // Assign it the value of the specified element
+  aux.setAttribute("value", document.getElementById(elementId).innerHTML);
 
-	  /* Alert the copied text */
-	  alert("Copied the text: " + copyText.value);
+  // Append it to the body
+  document.body.appendChild(aux);
+
+  // Highlight its content
+  aux.select();
+
+  // Copy the highlighted text
+  document.execCommand("copy");
+
+  // Remove it from the body
+  document.body.removeChild(aux);
+
+}
 </script>
 
 {% endblock %}
