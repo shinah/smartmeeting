@@ -1,6 +1,52 @@
+
 .vote{
 	text-align: center;
+	margin: 20px 0px 0px 0px;
+	background: url("../image/post_back.png") no-repeat;
+	background-size: cover;
+	padding: 50px 0px;
 }
+
+.vote > h1:first-child{
+	margin-top: 50px;
+	color: #777;
+}
+
+.vote > h3{
+	margin: 0px 0px 70px 0px;
+	color: #333;
+}
+
 .vote_result{
 	text-align: center;
+}
+
+.vote_list{
+	margin-top:50px;
+}
+.container{
+	margin-top:10px;
+	margin-left: 15%;
+	margin-right: 25%;
+}
+
+.container >p > a{
+	text-decoration: none;
+	font-size: 20px;
+    font-weight: bolder;
+	color: black;
+	padding-left:15px;
+}
+
+.vote_ing{
+	text-decoration: none;
+	background-color: #ede2f5;
+	padding-top: 10px; 
+	padding-bottom: 10px; 
+}
+.vote_ed{
+	text-decoration: none;
+	background-color: #9e9e9e99;
+	padding-top: 10px;
+	padding-bottom: 10px; 
 }

@@ -1,6 +1,8 @@
 {% extends 'blog/sub.html' %}
 {% load staticfiles%}
 {% block content %}
+
+<link rel="stylesheet" href="{% static 'css/vote.css'  %}">
 <div class='sub_nav'>
     <ul>
         <li><a href="{% url 'dic:group' url=post.group.url %}">{{post.group.group_name}}</a></li>
@@ -17,7 +19,7 @@
         <li class="breaker"> : </li>
             <li><a href="{% url 'dic:vote_new' pk=post.pk %}">투표 생성</a></li>
             <li class="breaker"> | </li>
-            <li><a href="{%url 'dic:vote_list' pk=post.pk %}">투표 목록</a></li>
+            <li class="select"><a href="{%url 'dic:vote_list' pk=post.pk %}">투표 목록</a></li>
             <li class="breaker"> | </li>
             <li><a href="{% url 'dic:task_new' pk=post.pk %}">업무 분담</a></li>
             <li class="breaker"> | </li>
@@ -27,19 +29,14 @@
 
 
 <h1></h1>
-<div class="">
+<div class="vote_list">
     {% for vote in post.votes.all %}
     <div class=container>
-        <h3>
         	{%if vote.vote_num != vote.num %}
-        	        [진행중 투표]
-        			<a href="{% url 'dic:vote' pk=post.pk id=vote.id %}">{{ vote.vote_title }}</a>
+        			<p class="vote_ing" ><a href="{% url 'dic:vote' pk=post.pk id=vote.id %}">[진행중 투표] {{ vote.vote_title }}</a></p>
         	{%else%}
-        			[완료된 투표]
-        			<a href="{% url 'dic:vote_result' id=vote.id %}">{{ vote.vote_title }}</a>
+        			<p class="vote_ed"><a href="{% url 'dic:vote_result' id=vote.id %}">[완료된 투표] {{ vote.vote_title }}</a></p>
         	{% endif %}
-
-        </h3>
     </div>
     {% endfor %}
 </div>
